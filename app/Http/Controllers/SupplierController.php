@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use Supplier model
 use App\Supplier;
-// use Auth library
+use App\Transformers\SupplierTransformer;
 use Auth;
-// use fractal transformer
-use App\Transformers\SupplierTransformers;
 
 class SupplierController extends Controller
 {
