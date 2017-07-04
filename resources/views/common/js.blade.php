@@ -25,7 +25,9 @@
 <script src="/assets/plugins/datatables/dataTables.responsive.min.js"></script>
 <script src="/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
 <script src="/assets/plugins/datatables/dataTables.scroller.min.js"></script>
-{{-- custom datatables js --}}
-{{-- <script src="/assets/pages/datatables.custom.js"></script> --}}
 {{-- main app js --}}
 <script src="/assets/js/app.js"></script>
+{{-- define main var --}}
+<script>
+    
+</script>

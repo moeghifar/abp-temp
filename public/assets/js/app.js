@@ -110,7 +110,6 @@
             // === following js will activate the menu in left side bar based on url ====
             $("#sidebar-menu a").each(function () {
                 if (readFixUriPath(this.pathname) == readFixUriPath(window.location.pathname)) {
-                    console.log("matched::"+readFixUriPath(this.pathname)+"::"+readFixUriPath(window.location.pathname))
                     $(this).addClass("active");
                     $(this).parent().addClass("active"); // add active to li of the current link
                     $(this).parent().parent().prev().addClass("active"); // add active class to an anchor

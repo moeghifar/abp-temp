@@ -8,55 +8,34 @@
         <meta content="Admin Dashboard" name="description" />
         <meta content="ThemeDesign" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
         <link rel="shortcut icon" href="/assets/images/favicon.ico">
-
         @include('common.css')
-
     </head>
-
-
     <body class="fixed-left">
-
         <!-- Begin page -->
         <div id="wrapper">
-
             @include('common.topbar')
-
             @include('common.sidebar')
-
             <!-- Start right Content here -->
-
             <div class="content-page">
                 <!-- Start content -->
                 <div class="content">
-
                     <div class="">
                         <div class="page-header-title">
                             <h4 class="page-title">@yield('page_title')</h4>
                         </div>
                     </div>
-
                     <div class="page-content-wrapper ">
-
                         <div class="container">
-
                             @yield('content')
-
                         </div><!-- container -->
-
-
                     </div> <!-- Page content Wrapper -->
-
                 </div> <!-- content -->
-
                 <footer class="footer">
                     © <?php echo date('Y') ?> - ABP Accounting
                 </footer>
-
             </div>
             <!-- End Right content here -->
-
         </div>
         <!-- END wrapper -->
         {{-- include required common js --}}
