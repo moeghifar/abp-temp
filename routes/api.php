@@ -25,8 +25,8 @@ Route::post('v1/auth/login','AuthController@login');
 Route::get('v1/users','UserController@users');
 Route::get('v1/users/profile','UserController@profile')->middleware('auth:api');
 
-// Supplier API
 Route::post('v1/supplier/add','SupplierController@add')->middleware('auth:api');
+// Supplier API
 Route::put('v1/supplier/{supplier}','SupplierController@update')->middleware('auth:api');
 Route::delete('v1/supplier/{supplier}','SupplierController@delete')->middleware('auth:api');
 Route::get('v1/supplier/get','SupplierController@get')->middleware('auth:api');

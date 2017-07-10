@@ -59,12 +59,13 @@ $(document).ready(function(){
     }
     /* used to render datatable based on data and column generated before */
     function renderTable(jsonData, jsonCol){
-        $("#datatable-custom-table").DataTable({
+        var tabel = $("#datatable-custom-table").DataTable({
             processing    : true,
             bSort         : false,
             data          : jsonData,
             columns       : jsonCol
-        });    
+        });
+        tabel.destroy();    
     }   
 
     /**
@@ -72,20 +73,50 @@ $(document).ready(function(){
      * 
      */
     $("#modal_form").on("submit", function(e){
-        console.log($(this).serialize());
+        var submitedData = generateRawJson($(this).serializeArray());
+        console.log(submitedData);
         $.ajax({
             headers : {
                 'Accept': 'application/json',
+                'Content-Type' : 'application/json',
                 'Authorization': common.ajaxApiToken,
             },
-            url: common.ajaxUrl,
+            data: submitedData,
+            url: common.ajaxSubmitUrl,
             method: 'POST',
-        }).done(function(getData){
-            var jsonData = buildData(getData.data);
-            var jsonCol = buildColumn(common.ajaxOutputColumn);
-            renderTable(jsonData, jsonCol);
+        }).error(function(error){
+            // Error handler
+            console.log("Error Occured!");
+            var fixError = parseError(error.responseJSON);
+            alert(fixError);
+        }).success(function(data){
+            // success handler
+            console.log("OK Succeed!");
+            // clear input form
+            $('#modal_form input').val("");
+            // close dialog
+            $('#modal_form').modal('hide');
+            // reload data
+            reload()
+            // send notification
         });
         e.preventDefault();
         return false;
     });
+
+    function generateRawJson(UnindexedArray) {
+        var IndexedArray = {};
+        $.map(UnindexedArray, function(n, i){
+            IndexedArray[n['name']] = n['value'];
+        });
+        return JSON.stringify(IndexedArray);
+    }
+
+    function parseError(error) {
+        var displayError = [];
+        $.each(error, function(key, val) {
+            displayError.push(val[0]);
+        });
+        return displayError;
+    }
 });

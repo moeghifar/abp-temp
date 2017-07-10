@@ -12,7 +12,7 @@ class SupplierController extends Controller
 
     public function get(Supplier $supplier)
     {
-    	$supplierResponse = $supplier->all();
+    	$supplierResponse = $supplier->orderBy('id', 'desc')->get();
     	return fractal()
     		->collection($supplierResponse)
     		->transformWith(new SupplierTransformer)
