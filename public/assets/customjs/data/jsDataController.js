@@ -30,7 +30,7 @@ $(document).ready(function(){
                 'Accept': 'application/json',
                 'Authorization': common.ajaxApiToken,
             },
-            url: common.ajaxUrl,
+            url: common.ajaxGetUrl,
             method: 'GET',
         }).done(function(getData){
             var jsonData = buildData(getData.data);
@@ -42,8 +42,9 @@ $(document).ready(function(){
     /* used to build data by embedding necessary data parameters such result_order & result_action */
     function buildData(jData){
         for(lp = 0; lp < jData.length; lp++){
+            var actionWrapper = "<span data-id='"+jData[lp].supplier_id+"'>"+common.ajaxAction+"</span>";
             jData[lp].result_order = lp+1;
-            jData[lp].result_action = common.ajaxAction;
+            jData[lp].result_action = actionWrapper;
         }
         return jData;
     }
@@ -59,31 +60,84 @@ $(document).ready(function(){
     }
     /* used to render datatable based on data and column generated before */
     function renderTable(jsonData, jsonCol){
-        var tabel = $("#datatable-custom-table").DataTable({
+        var tabel = $("#datatable-custom-table").DataTable();
+        tabel.destroy();    
+        tabel = $("#datatable-custom-table").DataTable({
             processing    : true,
             bSort         : false,
             data          : jsonData,
             columns       : jsonCol
         });
-        tabel.destroy();    
     }   
+    
+    // Modal event listener
+    $('body').on('click', '#btnAction', function(){
+        var action = $(this).data('action');
+        // clear input form
+        $('#formContainer input').val("");
+        if (action == 'add' || action == 'edit') {
+            if (action == 'edit') {
+                // append html and perform ajax data binding if required
+                var getId = $(this).parent().data('id');
+                generateEditForm(getId);
+            }
+            var actionInput = '<input type="hidden" name="_action" value="'+action+'">';
+            $('#appendContainer').html(actionInput);
+            $("#modalForm").modal('toggle');
+        } else if (action == 'delete'){
+            var getId = $(this).parent().data('id');
+            alert('delete'+getId);
+        } else {
+            alert('Wrong action type!');
+        }
+    });
+
+    function generateEditForm(id){
+        $.ajax({
+            headers : {
+                'Accept': 'application/json',
+                'Authorization': common.ajaxApiToken,
+            },
+            url: common.ajaxGetIdUrl+id,
+            method: 'GET',
+        }).success(function(data){
+            // append hidden to modal form
+            var idInput = '<input type="hidden" name="id" value="'+id+'">';
+            $('#appendContainer').append(idInput);
+            // append data to html 
+            parseDataToHtml(data.data);
+        });
+    }
 
     /**
      * Group of functions to add new data using dialog
      * 
      */
-    $("#modal_form").on("submit", function(e){
-        var submitedData = generateRawJson($(this).serializeArray());
-        console.log(submitedData);
+    $("#formContainer").on("submit", function(e){
+        var serializedInput = $(this).serializeArray();
+        var submitedData = generateRawJson(serializedInput);
+        var action = submitedData._action;
+        console.log(JSON.Stringify(submitedData));
+        ajaxMethod = 'POST';
+        alert(ajaxMethod);
+        // if (action == 'add') {
+        //     ajaxMethod = 'POST';
+        //     ajaxUri = common.ajaxAddUrl;
+        // } else if (action == 'edit') {
+        //     ajaxMethod = 'PATCH';
+        //     ajaxUri = common.ajaxEditUrl;
+        // } else {
+        //     alert('Wrong action type!');
+        // }
         $.ajax({
             headers : {
                 'Accept': 'application/json',
                 'Content-Type' : 'application/json',
                 'Authorization': common.ajaxApiToken,
             },
-            data: submitedData,
-            url: common.ajaxSubmitUrl,
-            method: 'POST',
+            data: JSON.Stringify(submitedData),
+            url: common.ajaxAddUrl,
+            method: "POST",
         }).error(function(data){
             // Error handler
             $("#errorContainer").remove();
@@ -94,7 +148,7 @@ $(document).ready(function(){
             // success handler
             console.log("OK Succeed!");
             // clear input form
-            $('#modal_form input').val("");
+            $('#formContainer input').val("");
             // close dialog
             $('#modalForm').modal('hide');
             // reload data
@@ -102,6 +156,7 @@ $(document).ready(function(){
             // send notification
             // .... not implemented yet ...
         });
+        e.preventDefault();
         return false;
     });
 
@@ -110,21 +165,21 @@ $(document).ready(function(){
         $.map(UnindexedArray, function(n, i){
             IndexedArray[n['name']] = n['value'];
         });
-        return JSON.stringify(IndexedArray);
-    }
-
-    function parseError(error) {
-        var displayError = [];
-        $.each(error, function(key, val) {
-            displayError.push(val[0]+'<br/>');
-        });
-        return displayError;
+        return IndexedArray;
     }
     
     function parseErrorToHtml(error) {
         $.each(error, function(key, val) {
             var errValue = '<div id="errorContainer" style="color:red;font-size:9pt;">'+val+'</div>';
-            $("#modal_form input[name='"+key+"']").next().html(errValue);
+            $("#formContainer input[name='"+key+"']").next().html(errValue);
         });
     }
+    
+    function parseDataToHtml(data) {
+        $.each(data, function(key, val) {
+            $("#formContainer input[name='"+key+"']").val(val);
+        });
+    }
+
+
 });

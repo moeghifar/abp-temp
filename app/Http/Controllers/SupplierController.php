@@ -50,4 +50,35 @@ class SupplierController extends Controller
         }
         return response()->json($response, $responseCode);
     }
+
+    // public function update(Request $request, Supplier $supplier)
+    // {
+    // 	$validator = Validator::make($request->all(), [
+    // 		'supplier_name' 	=> 'required|min:3',
+    // 		'supplier_address' 	=> 'required|min:10',
+    // 		'supplier_phone' 	=> 'required|min:10|numeric',
+	// 	]);
+    //     if ($validator->fails()) {
+    //         $response = $validator->errors();
+    //         $responseCode = 404;
+    //     } else {
+    //         $supplier->supplier_name 	= $request->get('supplier_name', $supplier->supplier_name);
+    //         $supplier->supplier_address = $request->get('supplier_address', $supplier->supplier_address);
+    //         $supplier->supplier_phone 	= $request->get('supplier_phone', $supplier->supplier_phone);
+    //         $supplier->save();
+    //         $response = fractal()
+    //             ->item($supplier)
+    //             ->transformWith(new SupplierTransformer)
+    //             ->toArray();
+    //         return response()->json($response, 201);
+    //     }
+    // }
+
+    // public function delete(Supplier $supplier)
+    // {
+    // 	$supplier->delete();
+    // 	return response()->json([
+    // 		'message' => 'Data was deleted',
+    // 	]);
+    // }
 }
