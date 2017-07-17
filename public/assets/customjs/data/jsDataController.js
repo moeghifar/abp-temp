@@ -76,8 +76,8 @@ $(document).ready(function(){
                 var getId = $(this).parent().data('id');
                 generateEditForm(getId);
             }
-            // var actionInput = '<input type="hidden" name="_action" value="'+action+'">';
-            // $('#appendContainer').html(actionInput);
+            var actionInput = '<input type="hidden" name="_action" value="'+action+'">';
+            $('#appendContainer').html(actionInput);
             $("#modalForm").modal('toggle');
         } else if (action == 'delete'){
             var getId = $(this).parent().data('id');
@@ -92,7 +92,7 @@ $(document).ready(function(){
                 'Accept': 'application/json',
                 'Authorization': common.ajaxApiToken,
             },
-            url: common.ajaxGetIdUrl+id,
+            url: common.ajaxIdUrl+id,
             method: 'GET',
         }).success(function(data){
             // append hidden to modal form
@@ -107,49 +107,48 @@ $(document).ready(function(){
      * 
      */
     $("body").on("submit", "#formContainer", function(e){
-        alert("wew");
-        // var serializedInput = $(this).serializeArray();
-        // var submitedData = generateRawJson(serializedInput);
-        // var action = submitedData._action;
-        // console.log(JSON.Stringify(submitedData));
-        // ajaxMethod = 'POST';
-        // alert(ajaxMethod);
-        // if (action == 'add') {
-        //     ajaxMethod = 'POST';
-        //     ajaxUri = common.ajaxAddUrl;
-        // } else if (action == 'edit') {
-        //     ajaxMethod = 'PATCH';
-        //     ajaxUri = common.ajaxEditUrl;
-        // } else {
-        //     alert('Wrong action type!');
-        // }
-        // $.ajax({
-        //     headers : {
-        //         'Accept': 'application/json',
-        //         'Content-Type' : 'application/json',
-        //         'Authorization': common.ajaxApiToken,
-        //     },
-        //     data: JSON.Stringify(submitedData),
-        //     url: common.ajaxAddUrl,
-        //     method: "POST",
-        // }).error(function(data){
-        //     // Error handler
-        //     $("#errorContainer").remove();
-        //     console.log("Error Occured!");
-        //     var fixError = parseErrorToHtml(data.responseJSON);
-        //     $("#errorContainer").html(fixError);
-        // }).success(function(data){
-        //     // success handler
-        //     console.log("OK Succeed!");
-        //     // clear input form
-        //     $('#formContainer input').val("");
-        //     // close dialog
-        //     $('#modalForm').modal('hide');
-        //     // reload data
-        //     reload();
-        //     // send notification
-        //     // .... not implemented yet ...
-        // });
+        var serializedInput = $(this).serializeArray();
+        var submitedData = generateRawJson(serializedInput);
+        var action = submitedData._action;
+        var id = submitedData.id;
+        var ajaxUri, ajaxMethod;
+        console.log(JSON.stringify(submitedData));
+        if (action == 'add') {
+            ajaxMethod = 'POST';
+            ajaxUri = common.ajaxAddUrl;
+        } else if (action == 'edit') {
+            ajaxMethod = 'PUT';
+            ajaxUri = common.ajaxIdUrl+id;
+        } else {
+            alert('Wrong action type!');
+        }
+        $.ajax({
+            headers : {
+                'Accept': 'application/json',
+                'Content-Type' : 'application/json',
+                'Authorization': common.ajaxApiToken,
+            },
+            data: JSON.stringify(submitedData),
+            url: ajaxUri,
+            method: ajaxMethod,
+        }).error(function(data){
+            // Error handler
+            $("#errorContainer").remove();
+            console.log("Error Occured!");
+            var fixError = parseErrorToHtml(data.responseJSON);
+            $("#errorContainer").html(fixError);
+        }).success(function(data){
+            // success handler
+            console.log("OK Succeed!");
+            // clear input form
+            $('#formContainer input').val("");
+            // close dialog
+            $('#modalForm').modal('hide');
+            // reload data
+            reload();
+            // send notification
+            // .... not implemented yet ...
+        });
         e.preventDefault();
         return false;
     });
