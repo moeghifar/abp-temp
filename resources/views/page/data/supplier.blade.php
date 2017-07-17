@@ -12,7 +12,7 @@
                             <a href="" class="btn btn-success"><i class="mdi mdi-plus"></i> Add Supplier</a>
                         </h4> --}}
                         <div class="m-b-30 m-t-0">
-                            <button type="button" class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalFormAdd"><i class="mdi mdi-plus"></i> Add Supplier</button>
+                            <button type="button" class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalForm"><i class="mdi mdi-plus"></i> Add Supplier</button>
                         </div>
                         <table id="datatable-custom-table" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
@@ -37,7 +37,7 @@
     @endisset
     <div class="col-xs-6 col-sm-3 m-t-30">
         <!-- standard modal -->
-        <div id="modalFormAdd" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="modalForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -49,15 +49,19 @@
                                 <div class="form-group">
                                     <label for="input1">Supplier Name</label>
                                     <input type="text" class="form-control" name="supplier_name" placeholder="Supplier Name">
+                                    <span></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="input2">Supplier Phone</label>
                                     <input type="text" class="form-control" name="supplier_phone" placeholder="Supplier Phone">
+                                    <span></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="input3">Supplier Address</label>
                                     <input type="text" class="form-control" name="supplier_address" placeholder="Supplier Address">
+                                    <span></span>
                                 </div>
+                                <div id="errorContainer" class="form-group" style="color:red;font-size:9pt;"></div>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary waves-effect waves-light" id="save_data">Save changes</button>
@@ -77,7 +81,7 @@
         common.ajaxUrl = '/api/v1/supplier/get'; 
         common.ajaxSubmitUrl = '/api/v1/supplier/add'; 
         common.ajaxOutputColumn = ["result_order","supplier_name","supplier_phone","supplier_address","result_action"];
-        common.ajaxAction = '<a href="#" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a> <a href="#" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+        common.ajaxAction = '<a id="doEdit" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a> <a id="doDelete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
     </script>
     <script src="/assets/customjs/data/jsDataController.js"></script>
 @endpush

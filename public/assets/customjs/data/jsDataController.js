@@ -84,23 +84,24 @@ $(document).ready(function(){
             data: submitedData,
             url: common.ajaxSubmitUrl,
             method: 'POST',
-        }).error(function(error){
+        }).error(function(data){
             // Error handler
+            $("#errorContainer").remove();
             console.log("Error Occured!");
-            var fixError = parseError(error.responseJSON);
-            alert(fixError);
+            var fixError = parseErrorToHtml(data.responseJSON);
+            $("#errorContainer").html(fixError);
         }).success(function(data){
             // success handler
             console.log("OK Succeed!");
             // clear input form
             $('#modal_form input').val("");
             // close dialog
-            $('#modal_form').modal('hide');
+            $('#modalForm').modal('hide');
             // reload data
-            reload()
+            reload();
             // send notification
+            // .... not implemented yet ...
         });
-        e.preventDefault();
         return false;
     });
 
@@ -115,8 +116,15 @@ $(document).ready(function(){
     function parseError(error) {
         var displayError = [];
         $.each(error, function(key, val) {
-            displayError.push(val[0]);
+            displayError.push(val[0]+'<br/>');
         });
         return displayError;
+    }
+    
+    function parseErrorToHtml(error) {
+        $.each(error, function(key, val) {
+            var errValue = '<div id="errorContainer" style="color:red;font-size:9pt;">'+val+'</div>';
+            $("#modal_form input[name='"+key+"']").next().html(errValue);
+        });
     }
 });
