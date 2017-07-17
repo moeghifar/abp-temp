@@ -44,7 +44,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title" id="myModalLabel">Form Supplier</h4>
                     </div>
-                    <form id="formContainer" method="POST">
+                    <form id="formContainer">
                         <div class="modal-body">
                                 <div class="form-group">
                                     <label for="input1">Supplier Name</label>

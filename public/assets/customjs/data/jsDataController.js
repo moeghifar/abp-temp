@@ -6,12 +6,10 @@ $(document).ready(function(){
      * which calls to requested API endpoint
      * 
      */
-
     var initialized = varInit();
     if (initialized) { 
         reload();
     }
-
     /* used to intialize variables */
     function varInit(){
         for(l=0;l<mandatory.length;l++){
@@ -22,7 +20,6 @@ $(document).ready(function(){
         }
         return true;
     }
-
     /* used to load data */
     function reload() {
         $.ajax({
@@ -38,7 +35,6 @@ $(document).ready(function(){
             renderTable(jsonData, jsonCol);
         });
     }
-
     /* used to build data by embedding necessary data parameters such result_order & result_action */
     function buildData(jData){
         for(lp = 0; lp < jData.length; lp++){
@@ -69,7 +65,6 @@ $(document).ready(function(){
             columns       : jsonCol
         });
     }   
-    
     // Modal event listener
     $('body').on('click', '#btnAction', function(){
         var action = $(this).data('action');
@@ -81,8 +76,8 @@ $(document).ready(function(){
                 var getId = $(this).parent().data('id');
                 generateEditForm(getId);
             }
-            var actionInput = '<input type="hidden" name="_action" value="'+action+'">';
-            $('#appendContainer').html(actionInput);
+            // var actionInput = '<input type="hidden" name="_action" value="'+action+'">';
+            // $('#appendContainer').html(actionInput);
             $("#modalForm").modal('toggle');
         } else if (action == 'delete'){
             var getId = $(this).parent().data('id');
@@ -91,7 +86,6 @@ $(document).ready(function(){
             alert('Wrong action type!');
         }
     });
-
     function generateEditForm(id){
         $.ajax({
             headers : {
@@ -108,18 +102,18 @@ $(document).ready(function(){
             parseDataToHtml(data.data);
         });
     }
-
     /**
      * Group of functions to add new data using dialog
      * 
      */
-    $("#formContainer").on("submit", function(e){
-        var serializedInput = $(this).serializeArray();
-        var submitedData = generateRawJson(serializedInput);
-        var action = submitedData._action;
-        console.log(JSON.Stringify(submitedData));
-        ajaxMethod = 'POST';
-        alert(ajaxMethod);
+    $("body").on("submit", "#formContainer", function(e){
+        alert("wew");
+        // var serializedInput = $(this).serializeArray();
+        // var submitedData = generateRawJson(serializedInput);
+        // var action = submitedData._action;
+        // console.log(JSON.Stringify(submitedData));
+        // ajaxMethod = 'POST';
+        // alert(ajaxMethod);
         // if (action == 'add') {
         //     ajaxMethod = 'POST';
         //     ajaxUri = common.ajaxAddUrl;
@@ -129,37 +123,36 @@ $(document).ready(function(){
         // } else {
         //     alert('Wrong action type!');
         // }
-        $.ajax({
-            headers : {
-                'Accept': 'application/json',
-                'Content-Type' : 'application/json',
-                'Authorization': common.ajaxApiToken,
-            },
-            data: JSON.Stringify(submitedData),
-            url: common.ajaxAddUrl,
-            method: "POST",
-        }).error(function(data){
-            // Error handler
-            $("#errorContainer").remove();
-            console.log("Error Occured!");
-            var fixError = parseErrorToHtml(data.responseJSON);
-            $("#errorContainer").html(fixError);
-        }).success(function(data){
-            // success handler
-            console.log("OK Succeed!");
-            // clear input form
-            $('#formContainer input').val("");
-            // close dialog
-            $('#modalForm').modal('hide');
-            // reload data
-            reload();
-            // send notification
-            // .... not implemented yet ...
-        });
+        // $.ajax({
+        //     headers : {
+        //         'Accept': 'application/json',
+        //         'Content-Type' : 'application/json',
+        //         'Authorization': common.ajaxApiToken,
+        //     },
+        //     data: JSON.Stringify(submitedData),
+        //     url: common.ajaxAddUrl,
+        //     method: "POST",
+        // }).error(function(data){
+        //     // Error handler
+        //     $("#errorContainer").remove();
+        //     console.log("Error Occured!");
+        //     var fixError = parseErrorToHtml(data.responseJSON);
+        //     $("#errorContainer").html(fixError);
+        // }).success(function(data){
+        //     // success handler
+        //     console.log("OK Succeed!");
+        //     // clear input form
+        //     $('#formContainer input').val("");
+        //     // close dialog
+        //     $('#modalForm').modal('hide');
+        //     // reload data
+        //     reload();
+        //     // send notification
+        //     // .... not implemented yet ...
+        // });
         e.preventDefault();
         return false;
     });
-
     function generateRawJson(UnindexedArray) {
         var IndexedArray = {};
         $.map(UnindexedArray, function(n, i){
@@ -167,19 +160,15 @@ $(document).ready(function(){
         });
         return IndexedArray;
     }
-    
     function parseErrorToHtml(error) {
         $.each(error, function(key, val) {
             var errValue = '<div id="errorContainer" style="color:red;font-size:9pt;">'+val+'</div>';
             $("#formContainer input[name='"+key+"']").next().html(errValue);
         });
     }
-    
     function parseDataToHtml(data) {
         $.each(data, function(key, val) {
             $("#formContainer input[name='"+key+"']").val(val);
         });
     }
-
-
 });
