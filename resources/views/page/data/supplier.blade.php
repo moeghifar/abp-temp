@@ -3,14 +3,11 @@
 @section('page_title', 'Supplier Data')
 @section('user_name', 'Administrator')
 @section('content')
-    @if($action == 'view')
+    @if($action == 'view' && $supplier_id == null)
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-body">
-                        {{-- <h4 class="m-b-30 m-t-0">
-                            <a href="" class="btn btn-success"><i class="mdi mdi-plus"></i> Add Supplier</a>
-                        </h4> --}}
                         <div class="m-b-30 m-t-0">
                             <button id="btnAction" data-action="add" type="button" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-plus"></i> Add Supplier</button>
                         </div>
@@ -31,47 +28,44 @@
                 </div>
             </div>
         </div> <!-- End Row -->
+    @else
+    Supplier Id : {{ $supplier_id }}
     @endif
-    @isset($supplier_id)
-        <p>Product id exists : {{ $supplier_id }}</p>
-    @endisset
-    <div class="col-xs-6 col-sm-3 m-t-30">
-        <!-- standard modal -->
-        <div id="modalForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" id="myModalLabel">Form Supplier</h4>
+    <!-- standard modal -->
+    <div id="modalForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">Form Supplier</h4>
+                </div>
+                <form id="formContainer">
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <label for="input1">Supplier Name</label>
+                                <input type="text" class="form-control" name="supplier_name" placeholder="Supplier Name">
+                                <span></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="input2">Supplier Phone</label>
+                                <input type="text" class="form-control" name="supplier_phone" placeholder="Supplier Phone">
+                                <span></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="input3">Supplier Address</label>
+                                <input type="text" class="form-control" name="supplier_address" placeholder="Supplier Address">
+                                <span></span>
+                            </div>
+                            <div id="appendContainer"></div>
                     </div>
-                    <form id="formContainer">
-                        <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="input1">Supplier Name</label>
-                                    <input type="text" class="form-control" name="supplier_name" placeholder="Supplier Name">
-                                    <span></span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="input2">Supplier Phone</label>
-                                    <input type="text" class="form-control" name="supplier_phone" placeholder="Supplier Phone">
-                                    <span></span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="input3">Supplier Address</label>
-                                    <input type="text" class="form-control" name="supplier_address" placeholder="Supplier Address">
-                                    <span></span>
-                                </div>
-                                <div id="appendContainer"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary waves-effect waves-light" id="save_data">Save changes</button>
-                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>    
-                        </div>
-                    </form>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary waves-effect waves-light" id="save_data">Save changes</button>
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>    
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 @endsection
 @push('custom_js')
     <script>

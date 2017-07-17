@@ -70,6 +70,8 @@ $(document).ready(function(){
         var action = $(this).data('action');
         // clear input form
         $('#formContainer input').val("");
+        // clear error info
+        $("#formContainer #errorContainer").remove();
         if (action == 'add' || action == 'edit') {
             if (action == 'edit') {
                 // append html and perform ajax data binding if required
@@ -132,16 +134,14 @@ $(document).ready(function(){
             url: ajaxUri,
             method: ajaxMethod,
         }).error(function(data){
-            // Error handler
-            $("#errorContainer").remove();
+            // handle error
             console.log("Error Occured!");
             var fixError = parseErrorToHtml(data.responseJSON);
             $("#errorContainer").html(fixError);
         }).success(function(data){
             // success handler
             console.log("OK Succeed!");
-            // clear input form
-            $('#formContainer input').val("");
+            
             // close dialog
             $('#modalForm').modal('hide');
             // reload data

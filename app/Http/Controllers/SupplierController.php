@@ -70,8 +70,9 @@ class SupplierController extends Controller
                 ->item($supplier)
                 ->transformWith(new SupplierTransformer)
                 ->toArray();
-            return response()->json($response, 201);
+            $responseCode = 201;
         }
+        return response()->json($response, $responseCode);
     }
 
     public function delete(Supplier $supplier)
