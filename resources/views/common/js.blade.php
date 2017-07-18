@@ -25,9 +25,8 @@
 <script src="/assets/plugins/datatables/dataTables.responsive.min.js"></script>
 <script src="/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
 <script src="/assets/plugins/datatables/dataTables.scroller.min.js"></script>
+{{-- sweetalert include --}}
+<script src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+<script src="/assets/pages/sweet-alert.init.js"></script>
 {{-- main app js --}}
 <script src="/assets/js/app.js"></script>
-{{-- define main var --}}
-<script>
-    
-</script>

@@ -143,7 +143,18 @@
 }(window.jQuery),
 
 //initializing
-    function ($) {
-        "use strict";
-        $.MainApp.init();
-    }(window.jQuery);
+function ($) {
+    "use strict";
+    $.MainApp.init();
+}(window.jQuery);
+
+/**
+ * DEFINE GLOBAL FUNCTION HERE !
+ */
+function notifSA(header,message) {
+    swal(header, message);
+}
+
+function confirmSA(header,message,callback){
+    
+}

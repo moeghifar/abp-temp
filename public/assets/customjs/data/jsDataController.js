@@ -80,6 +80,56 @@ $(document).ready(function(){
         });
     }   
     /**
+     * Submit form event listener
+     * this submit listener will execute form submission
+     * based on declared `_action` variable
+     */
+    $("body").on("submit", "#formContainer", function(e){
+        var serializedInput = $(this).serializeArray();
+        var submitedData = generateRawJson(serializedInput);
+        var action = submitedData._action;
+        var id = submitedData.id;
+        var ajaxUri, ajaxMethod;
+        console.log(JSON.stringify(submitedData));
+        if (action == 'add') {
+            ajaxMethod = 'POST';
+            ajaxUri = common.ajaxAddUrl;
+            notif = "Add data succeed!";
+        } else if (action == 'edit') {
+            ajaxMethod = 'PUT';
+            ajaxUri = common.ajaxIdUrl+id;
+            notif = "Edit data succeed!";
+        } else {
+            alert('Wrong action type!');
+        }
+        $.ajax({
+            headers : {
+                'Accept': 'application/json',
+                'Content-Type' : 'application/json',
+                'Authorization': common.ajaxApiToken,
+            },
+            data: JSON.stringify(submitedData),
+            url: ajaxUri,
+            method: ajaxMethod,
+        }).error(function(data){
+            // handle error
+            console.log("Error Occured!");
+            var fixError = parseErrorToHtml(data.responseJSON);
+            $("#errorContainer").html(fixError);
+        }).success(function(data){
+            // success handler
+            console.log("OK Succeed!");
+            // close dialog
+            $('#modalForm').modal('hide');
+            // reload data
+            reload();
+            // send notification
+            notifSA(notif);
+        });
+        e.preventDefault();
+        return false;
+    });
+    /**
      * modal event listener
      * this click function will listen #btnAction
      * there are 3 conditions which are add, edit & delete
@@ -109,76 +159,12 @@ $(document).ready(function(){
         } else if (action == 'delete'){
             // get id
             var getId = $(this).parent().data('id');
-            // creaete message confirmation to delete data, and append hidden delete_id 
-            var msg = '<br/>Delete this data?<br/><br/><input type="hidden" name="delete_id" value="'+getId+'">';
             // do delete by calling confirmWithModal function 
-            confirmWithModal(msg);
+            confirmDeleteSA(getId);
         } else {
             // last condition detect if the action is malformed
             alert('Wrong action type!');
         }
-    });
-    /**
-     * click button event listener
-     * this function will listen #btnYes if yes is clicked
-     * then perform delete data using ajax
-     */
-    $('#modalConfirm').on('click','#btnYes',function(){
-        // read id
-        var deleteId = $('#modalConfirm input[name="delete_id"]').val();
-        // calling delete data with if condition which return true if delete succeed
-        if (deleteData(deleteId)) {
-            // close modalConfirm
-            $('#modalConfirm').modal('toggle');
-        }
-    });
-    /**
-     * Submit form event listener
-     * this submit listener will execute form submission
-     * based on declared `_action` variable
-     */
-    $("body").on("submit", "#formContainer", function(e){
-        var serializedInput = $(this).serializeArray();
-        var submitedData = generateRawJson(serializedInput);
-        var action = submitedData._action;
-        var id = submitedData.id;
-        var ajaxUri, ajaxMethod;
-        console.log(JSON.stringify(submitedData));
-        if (action == 'add') {
-            ajaxMethod = 'POST';
-            ajaxUri = common.ajaxAddUrl;
-        } else if (action == 'edit') {
-            ajaxMethod = 'PUT';
-            ajaxUri = common.ajaxIdUrl+id;
-        } else {
-            alert('Wrong action type!');
-        }
-        $.ajax({
-            headers : {
-                'Accept': 'application/json',
-                'Content-Type' : 'application/json',
-                'Authorization': common.ajaxApiToken,
-            },
-            data: JSON.stringify(submitedData),
-            url: ajaxUri,
-            method: ajaxMethod,
-        }).error(function(data){
-            // handle error
-            console.log("Error Occured!");
-            var fixError = parseErrorToHtml(data.responseJSON);
-            $("#errorContainer").html(fixError);
-        }).success(function(data){
-            // success handler
-            console.log("OK Succeed!");
-            // close dialog
-            $('#modalForm').modal('hide');
-            // reload data
-            reload();
-            // send notification
-            // .... not implemented yet ...
-        });
-        e.preventDefault();
-        return false;
     });
     /**
      * generateRawJson function
@@ -238,13 +224,23 @@ $(document).ready(function(){
         });
     }
     /**
-     * confirmWithModal function
-     * appending data from message to modal confirm
-     * and also open the modal
+     * confirmDeleteSA function
+     * confirm deleting data with sweet alert confirm dialog
+     * send id and message
      */
-    function confirmWithModal(message){
-        $("#modalConfirm .modal-body").html(message);
-        $("#modalConfirm").modal('toggle');
+    function confirmDeleteSA(id){
+        // new function using sweet alert confirm
+        swal({
+            title: 'Are you sure?',
+            text: 'Your data will be deleted, if you proceed this confirmation!',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: 'btn-primary',
+            confirmButtonText: "Yes",
+            closeOnConfirm: false
+        }, function () {
+            deleteData(id);
+        });
     }
     /**
      * deleteData function
@@ -252,6 +248,7 @@ $(document).ready(function(){
      * and reload the data if succeed
      */
     function deleteData(id){
+        var notif = "Delete data succeed!";
         $.ajax({
             headers : {
                 'Accept': 'application/json',
@@ -264,8 +261,8 @@ $(document).ready(function(){
             console.log("Delete Succeed!");
             // reload data
             reload();
-            // send notification
-            // .... not implemented yet ...
+            // notification
+            swal("Deleted!", "Your data has been deleted.", "success");
         });
         return true;
     }
