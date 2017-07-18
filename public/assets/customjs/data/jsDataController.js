@@ -114,8 +114,10 @@ $(document).ready(function(){
         }).error(function(data){
             // handle error
             console.log("Error Occured!");
-            var fixError = parseErrorToHtml(data.responseJSON);
-            $("#errorContainer").html(fixError);
+            // parse error and append to html
+            parseErrorToHtml(data.responseJSON);
+            // var fixError = parseErrorToHtml(data.responseJSON);
+            // $("#errorContainer").html(fixError);
         }).success(function(data){
             // success handler
             console.log("OK Succeed!");

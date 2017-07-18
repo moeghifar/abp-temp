@@ -154,7 +154,3 @@ function ($) {
 function notifSA(header,message) {
     swal(header, message);
 }
-
-function confirmSA(header,message,callback){
-    
-}
