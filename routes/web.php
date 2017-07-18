@@ -42,14 +42,8 @@ Route::get('/data/product/{action?}/{product_id?}', function ($action = null, $p
 });
 
 Route::get('/data/supplier/{action?}/{supplier_id?}', function ($action = null, $supplier_id = null) {
-    $availableAction = array('edit','view');
     switch($action) {
         case 'view' :  
-            break;
-        case 'edit' : 
-            if($supplier_id == null){
-                return abort(404, "Wrong URI Path");
-            }
             break;
         default :
             if ($action == null) {
@@ -58,8 +52,8 @@ Route::get('/data/supplier/{action?}/{supplier_id?}', function ($action = null, 
                 return abort(404, "Wrong URI Path");
             }
     }
-    $params['action']       = $action;
-    $params['supplier_id']   = $supplier_id;
+    $params['action']           = $action;
+    $params['supplier_id']      = $supplier_id;
     return view('page/data/supplier',$params);
 });
 
