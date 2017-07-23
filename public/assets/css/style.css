@@ -3075,6 +3075,12 @@ body.fixed-left .side-menu.left {
 .small-menu .content-page {
   margin-left: 190px;
 }
+/* Extra custom css style */
+.logo-text {
+  color: #333333;
+  font-size: 30pt;
+  padding: 20px;
+}
 /*
 File: Responsive
 */

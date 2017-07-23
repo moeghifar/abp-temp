@@ -17,7 +17,7 @@ class SupplierController extends Controller
     	return fractal()
     		->collection($supplierResponse)
     		->transformWith(new SupplierTransformer)
-    		->toArray();
+    		->respond();
     }
 
     public function getById(Supplier $supplier, $id)
@@ -26,7 +26,7 @@ class SupplierController extends Controller
     	return fractal()
     		->item($supplierResponse)
     		->transformWith(new SupplierTransformer)
-    		->toArray();
+    		->respond();
     }
 
     public function add(Request $request, Supplier $supplier)
@@ -82,4 +82,5 @@ class SupplierController extends Controller
     		'message' => 'Data was deleted',
     	]);
     }
+    
 }

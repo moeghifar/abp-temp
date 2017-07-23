@@ -18,10 +18,16 @@
             <div class="ex-page-content text-center">
                 <h1 class="text-white">404!</h1>
                 <h2 class="text-white">Sorry, page not found</h2><br>
-                <a class="btn btn-info waves-effect waves-light" href="/home">Back to Dashboard</a>
+                <a id="btnBack" class="btn btn-info waves-effect waves-light" href="/home">Going Back?</a>
                 <p style="margin-top:20px;" class="text-white">{{ $exception->getMessage() }}</p>
             </div>
         </div>
         @include('common.js')
+        <script>
+            $(function(){
+                var prev = document.referrer;
+                $("#btnBack").attr('href',prev);
+            })
+        </script>
     </body>
 </html>
