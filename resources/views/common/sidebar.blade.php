@@ -12,7 +12,7 @@
                     <ul class="list-unstyled">
                         <li><a href="/data/supplier">Supplier Data</a></li>
                         <li><a href="/data/customer">Customer Data</a></li>
-                        <li><a href="/data/product/view">Product Data</a></li>
+                        <li><a href="/data/product">Product Data</a></li>
                     </ul>
                 </li>
                 <li class="has_sub">

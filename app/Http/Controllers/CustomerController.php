@@ -39,7 +39,7 @@ class CustomerController extends Controller
             $response = $validator->errors();
             $responseCode = 404;
         } else {
-            $CustomerResponse = $customer->create([
+            $customerResponse = $customer->create([
                 'customer_name'		=> $request->customer_name,
                 'customer_address'	=> $request->customer_address,
                 'customer_phone'	=> $request->customer_phone,

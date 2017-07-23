@@ -17,10 +17,12 @@ class CreateTableProduct extends Migration
         Schema::create('products', function(Blueprint $table){
             $table->increments('id');
             $table->string('product_name');
-            $table->integer('supplier_id');
-            $table->foreign('supplier_id')->references('id')->on('suppliers');
+            $table->integer('supplier_id')->unsigned();
             $table->integer('price');
             $table->timestamps();
+        });
+        Schema::table('products', function(Blueprint $table) {
+            $table->foreign('supplier_id')->references('id')->on('suppliers');
         });
     }
 

@@ -25,8 +25,11 @@
         @include('common.js')
         <script>
             $(function(){
-                var prev = document.referrer;
-                $("#btnBack").attr('href',prev);
+                var prevUrl = document.referrer;
+                var curUrl  = document.URL;
+                if (curUrl != prev) {
+                    $("#btnBack").attr('href',prev);
+                }
             })
         </script>
     </body>
