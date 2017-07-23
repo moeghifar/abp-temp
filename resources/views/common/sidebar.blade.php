@@ -10,9 +10,9 @@
                 <li class="has_sub">
                     <a class="waves-effect"><i class="glyphicon glyphicon-folder-open"></i><span> Data </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="/data/product/view">Product Data</a></li>
                         <li><a href="/data/supplier">Supplier Data</a></li>
                         <li><a href="/data/customer">Customer Data</a></li>
+                        <li><a href="/data/product">Product Data</a></li>
                     </ul>
                 </li>
                 <li class="has_sub">

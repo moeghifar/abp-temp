@@ -30,13 +30,14 @@ $(document).ready(function(){
         $.ajax({
             headers : {
                 'Accept': 'application/json',
-                'Authorization': common.ajaxApiToken,
+                'Authorization': common.apiToken,
             },
-            url: common.ajaxGetUrl,
+            url: common.urlGet,
             method: 'GET',
         }).done(function(getData){
+            console.log(getData.data);
             var jsonData = buildData(getData.data);
-            var jsonCol = buildColumn(common.ajaxOutputColumn);
+            var jsonCol = buildColumn(common.outputColumn);
             renderTable(jsonData, jsonCol);
         });
     }
@@ -46,7 +47,7 @@ $(document).ready(function(){
      */
     function buildData(jData){
         for(lp = 0; lp < jData.length; lp++){
-            var actionWrapper = "<span data-id='"+jData[lp].supplier_id+"'>"+common.ajaxAction+"</span>";
+            var actionWrapper = "<span data-id='"+jData[lp][common.idName+"_id"]+"'>"+common.actionButton+"</span>";
             jData[lp].result_order = lp+1;
             jData[lp].result_action = actionWrapper;
         }
@@ -73,10 +74,10 @@ $(document).ready(function(){
         var tabel = $("#datatable-custom-table").DataTable();
         tabel.destroy();    
         tabel = $("#datatable-custom-table").DataTable({
-            processing    : true,
-            bSort         : false,
-            data          : jsonData,
-            columns       : jsonCol
+            bSort           : false,
+            deferLoading    : 2,
+            data            : jsonData,
+            columns         : jsonCol
         });
     }   
     /**
@@ -93,11 +94,11 @@ $(document).ready(function(){
         console.log(JSON.stringify(submitedData));
         if (action == 'add') {
             ajaxMethod = 'POST';
-            ajaxUri = common.ajaxAddUrl;
+            ajaxUri = common.urlAdd;
             notif = "Add data succeed!";
         } else if (action == 'edit') {
             ajaxMethod = 'PUT';
-            ajaxUri = common.ajaxIdUrl+id;
+            ajaxUri = common.urlID+id;
             notif = "Edit data succeed!";
         } else {
             alert('Wrong action type!');
@@ -106,7 +107,7 @@ $(document).ready(function(){
             headers : {
                 'Accept': 'application/json',
                 'Content-Type' : 'application/json',
-                'Authorization': common.ajaxApiToken,
+                'Authorization': common.apiToken,
             },
             data: JSON.stringify(submitedData),
             url: ajaxUri,
@@ -202,9 +203,9 @@ $(document).ready(function(){
         $.ajax({
             headers : {
                 'Accept': 'application/json',
-                'Authorization': common.ajaxApiToken,
+                'Authorization': common.apiToken,
             },
-            url: common.ajaxIdUrl+id,
+            url: common.urlID+id,
             method: 'GET',
         }).success(function(data){
             // create hidden input id
@@ -254,9 +255,9 @@ $(document).ready(function(){
         $.ajax({
             headers : {
                 'Accept': 'application/json',
-                'Authorization': common.ajaxApiToken,
+                'Authorization': common.apiToken,
             },
-            url: common.ajaxIdUrl+id,
+            url: common.urlID+id,
             method: 'DELETE',
         }).success(function(data){
             // success handler
@@ -267,5 +268,49 @@ $(document).ready(function(){
             swal("Deleted!", "Your data has been deleted.", "success");
         });
         return true;
+    }
+    /**
+     * Automated `Select-Generator`
+     */
+    $('select').each(function(){
+        var t = $(this);
+        var check = t.data('generate');
+        switch(check) {
+            case 'select-generator':
+                var ajaxURI = t.data('api');
+                var idName  = t.data('idname');
+                var selectData;
+                // get data with ajax
+                $.ajax({
+                    headers : {
+                        'Accept': 'application/json',
+                        'Authorization': common.apiToken,
+                    },
+                    url: ajaxURI,
+                    method: 'GET',
+                }).done(function(getData){
+                    defaultSelectData = '<option value="0">... choose '+idName+' data ...</option>';
+                    selectData = selectGeneratorDataBuilder(getData.data,idName);
+                    t.append(defaultSelectData+selectData);
+                });
+            break;
+            
+            default :
+            break; 
+        }
+    });
+    /**
+     * Build data for `Select-Generator`
+     */
+    function selectGeneratorDataBuilder(jData,idName){
+        selectData = [];
+        for(lp = 0; lp < jData.length; lp++){
+            var optBuild = '<option value="'+jData[lp][idName+"_id"]+'">'
+                + jData[lp][idName+"_name"]
+                + '</option>'
+                ;
+            selectData.push(optBuild);    
+        }
+        return selectData;
     }
 });

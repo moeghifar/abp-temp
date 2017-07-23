@@ -31,3 +31,17 @@ Route::put('v1/supplier/{supplier}','SupplierController@update')->middleware('au
 Route::delete('v1/supplier/{supplier}','SupplierController@delete')->middleware('auth:api');
 Route::get('v1/supplier/get','SupplierController@get')->middleware('auth:api');
 Route::get('v1/supplier/{id}','SupplierController@getById')->middleware('auth:api');
+
+// Customer API
+Route::post('v1/customer/add','CustomerController@add')->middleware('auth:api');
+Route::put('v1/customer/{customer}','CustomerController@update')->middleware('auth:api');
+Route::delete('v1/customer/{customer}','CustomerController@delete')->middleware('auth:api');
+Route::get('v1/customer/get','CustomerController@get')->middleware('auth:api');
+Route::get('v1/customer/{id}','CustomerController@getById')->middleware('auth:api');
+
+// Product API
+Route::post('v1/product/add','ProductController@add')->middleware('auth:api');
+Route::put('v1/product/{product}','ProductController@update')->middleware('auth:api');
+Route::delete('v1/product/{product}','ProductController@delete')->middleware('auth:api');
+Route::get('v1/product/get','ProductController@get')->middleware('auth:api');
+Route::get('v1/product/{id}','ProductController@getById')->middleware('auth:api');

@@ -3,7 +3,7 @@
 @section('page_title', 'Supplier Data')
 @section('user_name', 'Administrator')
 @section('content')
-    @if($action == 'view' && $supplier_id == null)
+    @if($supplier_id == null)
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
@@ -44,17 +44,17 @@
                             <div class="form-group">
                                 <label for="input1">Supplier Name</label>
                                 <input type="text" class="form-control" name="supplier_name" placeholder="Supplier Name">
-                                <span></span>
+                                <small></small>
                             </div>
                             <div class="form-group">
                                 <label for="input2">Supplier Phone</label>
                                 <input type="text" class="form-control" name="supplier_phone" placeholder="Supplier Phone">
-                                <span></span>
+                                <small></small>
                             </div>
                             <div class="form-group">
                                 <label for="input3">Supplier Address</label>
                                 <input type="text" class="form-control" name="supplier_address" placeholder="Supplier Address">
-                                <span></span>
+                                <small></small>
                             </div>
                             <div id="appendContainer"></div>
                     </div>
@@ -86,18 +86,18 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <!-- EOF Modal with confirmation -->
-    
 @endsection
 @push('custom_js')
     <script>
-        var mandatory = ["ajaxGetUrl","ajaxAction","ajaxOutputColumn","ajaxApiToken"]
+        var mandatory = ["idName","apiToken","urlID","urlGet","urlAdd","outputColumn","actionButton"]
         var common = {};
-        common.ajaxApiToken = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';
-        common.ajaxIdUrl = '/api/v1/supplier/'; 
-        common.ajaxGetUrl = '/api/v1/supplier/get'; 
-        common.ajaxAddUrl = '/api/v1/supplier/add';  
-        common.ajaxOutputColumn = ["result_order","supplier_name","supplier_phone","supplier_address","result_action"];
-        common.ajaxAction = '<button id="btnAction" data-action="edit" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button> <button id="btnAction" data-action="delete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>';
+        common.idName       = 'supplier';
+        common.apiToken     = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';
+        common.urlID        = '/api/v1/supplier/'; 
+        common.urlGet       = '/api/v1/supplier/get'; 
+        common.urlAdd       = '/api/v1/supplier/add';  
+        common.outputColumn = ["result_order","supplier_name","supplier_phone","supplier_address","result_action"];
+        common.actionButton = '<button id="btnAction" data-action="edit" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button> <button id="btnAction" data-action="delete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>';
     </script>
     <script src="/assets/customjs/data/jsDataController.js"></script>
 @endpush
