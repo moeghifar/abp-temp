@@ -294,21 +294,17 @@ $(document).ready(function(){
                 var t = $(this);
                 var check = t.data('generate');
                 if (check == 'select-generator') {
-                    var ajaxURI = t.data('api');
-                    var idName = t.data('idname');
-                    var selectData = '';
-                    if (action == 'edit') {
-                        var idSelect = t.data('idvalue');
-                        console.log("idSelect :" + idSelect);
-                    }
-                    t.html();
-                    selectGeneratorAjaxCall(ajaxURI, idName);   
+                    selectGeneratorAjaxCall(t);   
                 }
             });
         }
         
     }
     function selectGeneratorAjaxCall(t) {
+        var ajaxURI = t.data('api');
+        var idName = t.data('idname');
+        var selectData = '';
+        t.html();
         // get data with ajax
         return $.ajax({
             headers: {
