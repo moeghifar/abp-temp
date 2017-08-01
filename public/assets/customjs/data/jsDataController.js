@@ -152,6 +152,9 @@ $(document).ready(function(){
                 var getId = $(this).parent().data('id');
                 // generate edit form by calling generateEditForm function
                 generateEditForm(getId);
+            } else {
+                // execute auto select generator if exist
+                selectGenerator(action);
             }
             // create action input type, used to manipulate ajax form submit
             var actionInput = '<input type="hidden" name="_action" value="'+action+'">';
@@ -200,7 +203,7 @@ $(document).ready(function(){
      * and append them to form inside modal
      */
     function generateEditForm(id){
-        $.ajax({
+        return $.ajax({
             headers : {
                 'Accept': 'application/json',
                 'Authorization': common.apiToken,
@@ -222,9 +225,19 @@ $(document).ready(function(){
      * and append them to html form
      */
     function parseDataToHtml(data) {
+        console.log("[LOG] execute parseDataToHtml");
         $.each(data, function(key, val) {
-            $("#formContainer input[name='"+key+"']").val(val);
+            var selectObject = {};
+            if ($('#formContainer select[name="' + key + '"]').length) {
+                console.log('generate select for : '+key +' = '+ val);
+                // execute auto select generator if exist
+                selectObject.key = key; 
+                selectObject.value = val; 
+                selectGenerator('edit',selectObject);  
+            } 
+            $("#formContainer input[name='" + key + "']").val(val);
         });
+        return 
     }
     /**
      * confirmDeleteSA function
@@ -272,45 +285,70 @@ $(document).ready(function(){
     /**
      * Automated `Select-Generator`
      */
-    $('select').each(function(){
-        var t = $(this);
-        var check = t.data('generate');
-        switch(check) {
-            case 'select-generator':
-                var ajaxURI = t.data('api');
-                var idName  = t.data('idname');
-                var selectData;
-                // get data with ajax
-                $.ajax({
-                    headers : {
-                        'Accept': 'application/json',
-                        'Authorization': common.apiToken,
-                    },
-                    url: ajaxURI,
-                    method: 'GET',
-                }).done(function(getData){
-                    defaultSelectData = '<option value="0">... choose '+idName+' data ...</option>';
-                    selectData = selectGeneratorDataBuilder(getData.data,idName);
-                    t.append(defaultSelectData+selectData);
-                });
-            break;
-            
-            default :
-            break; 
+    function selectGenerator(action,selectObject) {
+        console.log("[LOG] execute selectGenerator [action : " + action + "]");
+        if (action == 'edit') {
+
+        } else {
+            $('body').find('select').each(function () {
+                var t = $(this);
+                var check = t.data('generate');
+                if (check == 'select-generator') {
+                    var ajaxURI = t.data('api');
+                    var idName = t.data('idname');
+                    var selectData = '';
+                    if (action == 'edit') {
+                        var idSelect = t.data('idvalue');
+                        console.log("idSelect :" + idSelect);
+                    }
+                    t.html();
+                    selectGeneratorAjaxCall(ajaxURI, idName);   
+                }
+            });
         }
-    });
+        
+    }
+    function selectGeneratorAjaxCall(t) {
+        // get data with ajax
+        return $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': common.apiToken,
+            },
+            url: ajaxURI,
+            method: 'GET',
+        }).success(function (getData) {
+            if (typeof idSelect != 'undefined') {
+                selectData = selectGeneratorDataBuilder(getData.data, idName, idSelect);
+            } else {
+                defaultSelectData = '<option value="0">... choose ' + idName + ' data ...</option>';
+                selectData = defaultSelectData + selectGeneratorDataBuilder(getData.data, idName, null);
+            }
+            t.html(selectData);
+        });
+    }
     /**
      * Build data for `Select-Generator`
      */
-    function selectGeneratorDataBuilder(jData,idName){
+    function selectGeneratorDataBuilder(jData,idName,idSelected){
+        console.log("[LOG] execute selecGeneratorDataBuilder [idName]"+ idName +" [idSelected]"+ idSelected);
         selectData = [];
         for(lp = 0; lp < jData.length; lp++){
-            var optBuild = '<option value="'+jData[lp][idName+"_id"]+'">'
-                + jData[lp][idName+"_name"]
-                + '</option>'
+            var selected = '';
+            var dataId = jData[lp][idName + "_id"];
+            var dataName = jData[lp][idName + "_name"];
+            if (idSelected != null) {
+                if (idSelected == dataId) {
+                    selected = 'selected="selected"';
+                }
+            }
+            var optBuild = '<option value="'
+                + dataId + '" '
+                + selected + '>'
+                + dataName + '</option>'
                 ;
             selectData.push(optBuild);    
         }
-        return selectData;
+        return selectData.join('');
     }
 });

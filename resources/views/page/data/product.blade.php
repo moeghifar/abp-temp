@@ -99,6 +99,7 @@
         common.urlAdd       = '/api/v1/product/add';  
         common.outputColumn = ["result_order","product_name","supplier_name","price","result_action"];
         common.actionButton = '<button id="btnAction" data-action="edit" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button> <button id="btnAction" data-action="delete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>';
+        common.relations    = ["supplier"];
     </script>
     <script src="/assets/customjs/data/jsDataController.js"></script>
 @endpush
