@@ -48,6 +48,7 @@ $(document).ready(function(){
     function buildData(jData){
         for(lp = 0; lp < jData.length; lp++){
             var actionWrapper = "<span data-id='"+jData[lp][common.idName+"_id"]+"'>"+common.actionButton+"</span>";
+            jData[lp].price = nyastUtil.numberFormat(jData[lp].price,'Rp '); 
             jData[lp].result_order = lp+1;
             jData[lp].result_action = actionWrapper;
         }
@@ -74,10 +75,11 @@ $(document).ready(function(){
         var tabel = $("#datatable-custom-table").DataTable();
         tabel.destroy();    
         tabel = $("#datatable-custom-table").DataTable({
-            bSort           : false,
-            deferLoading    : 2,
-            data            : jsonData,
-            columns         : jsonCol
+            "data"          : jsonData,
+            "columns"       : jsonCol,
+            "aoColumnDefs"  : [
+                { "bSortable": false, "aTargets": ["_all"] }
+            ]
         });
     }   
     /**
@@ -226,16 +228,16 @@ $(document).ready(function(){
      */
     function parseDataToHtml(data) {
         console.log("[LOG] execute parseDataToHtml");
-        $.each(data, function(key, val) {
+        $.each(data, function(className, itemID) {
             var selectObject = {};
-            if ($('#formContainer select[name="' + key + '"]').length) {
-                console.log('generate select for : '+key +' = '+ val);
+            if ($('#formContainer select[name="' + className + '"]').length) {
+                console.log('generate select for : ' + className +' = '+ itemID);
                 // execute auto select generator if exist
-                selectObject.key = key; 
-                selectObject.value = val; 
+                selectObject.className = className; 
+                selectObject.itemID = itemID; 
                 selectGenerator('edit',selectObject);  
             } 
-            $("#formContainer input[name='" + key + "']").val(val);
+            $("#formContainer input[name='" + className + "']").val(itemID);
         });
         return 
     }
@@ -288,7 +290,13 @@ $(document).ready(function(){
     function selectGenerator(action,selectObject) {
         console.log("[LOG] execute selectGenerator [action : " + action + "]");
         if (action == 'edit') {
-
+            $('body').find('select[name="'+ selectObject.className +'"]').each(function () {
+                var t = $(this);
+                var check = t.data('generate');
+                if (check == 'select-generator') {
+                    selectGeneratorAjaxCall(t, selectObject.itemID);
+                }
+            });
         } else {
             $('body').find('select').each(function () {
                 var t = $(this);
@@ -300,7 +308,7 @@ $(document).ready(function(){
         }
         
     }
-    function selectGeneratorAjaxCall(t) {
+    function selectGeneratorAjaxCall(t, idSelect) {
         var ajaxURI = t.data('api');
         var idName = t.data('idname');
         var selectData = '';

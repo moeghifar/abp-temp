@@ -99,5 +99,5 @@
         common.outputColumn = ["result_order","sales_order_name","sales_order_phone","sales_order_address","result_action"];
         common.actionButton = '<button id="btnAction" data-action="edit" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button> <button id="btnAction" data-action="delete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>';
     </script>
-    <script src="/assets/customjs/data/jsDataController.js"></script>
+    <script src="/assets/customjs/main.js"></script>
 @endpush

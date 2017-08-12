@@ -30,3 +30,4 @@
 <script src="/assets/pages/sweet-alert.init.js"></script>
 {{-- main app js --}}
 <script src="/assets/js/app.js"></script>
+<script src="/assets/customjs/util.js"></script>

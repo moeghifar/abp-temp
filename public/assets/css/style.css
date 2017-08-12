@@ -3159,3 +3159,37 @@ File: Responsive
     display: none;
   }
 }
+
+table .number-order {
+  width: 1px;
+}
+
+table td {
+    word-wrap: break-word;         /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+}
+
+table.dataTable.no-sort thead .sorting_asc:after {
+  content: none !important;
+}
+
+.action {
+  width: 5% !important; 
+}
+
+.address-box{
+  width: 45% !important;
+}
+
+/* override responsive datatables plus icon */
+table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before {
+  top: auto !important;
+  left: 6px !important;
+  background-color:#fe763a !important;
+  border-radius: 5px !important;
+  box-shadow: none !important;
+}
+
+table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting{
+  padding-right: 0px !important;
+}

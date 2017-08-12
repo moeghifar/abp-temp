@@ -11,10 +11,10 @@
                         <div class="m-b-30 m-t-0">
                             <button id="btnAction" data-action="add" type="button" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-plus"></i> Add Product</button>
                         </div>
-                        <table id="datatable-custom-table" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        <table id="datatable-custom-table" class="table table-striped table-bordered dt-responsive no-sort" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th class="number-order">#</th>
                                 <th>Product Name</th>
                                 <th>Supplier</th>
                                 <th>Price</th>
@@ -101,5 +101,5 @@
         common.actionButton = '<button id="btnAction" data-action="edit" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button> <button id="btnAction" data-action="delete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>';
         common.relations    = ["supplier"];
     </script>
-    <script src="/assets/customjs/data/jsDataController.js"></script>
+    <script src="/assets/customjs/main.js"></script>
 @endpush
