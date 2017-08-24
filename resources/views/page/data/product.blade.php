@@ -18,6 +18,7 @@
                                 <th>Product Name</th>
                                 <th>Supplier</th>
                                 <th>Price</th>
+                                <th>Unit</th>
                                 <th class="action">Action</th>
                             </tr>
                             </thead>
@@ -54,6 +55,11 @@
                             <div class="form-group">
                                 <label for="input3">Price</label>
                                 <input type="text" class="form-control" name="price" placeholder="price">
+                                <small></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="input3">Unit</label>
+                                <input type="text" class="form-control" name="unit" placeholder="unit">
                                 <small></small>
                             </div>
                             <div id="appendContainer"></div>
@@ -97,7 +103,7 @@
         common.urlID        = '/api/v1/product/'; 
         common.urlGet       = '/api/v1/product/get'; 
         common.urlAdd       = '/api/v1/product/add';  
-        common.outputColumn = ["result_order","product_name","supplier_name","price","result_action"];
+        common.outputColumn = ["result_order","product_name","supplier_name","price","unit","result_action"];
         common.actionButton = '<button id="btnAction" data-action="edit" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button> <button id="btnAction" data-action="delete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>';
         common.relations    = ["supplier"];
     </script>

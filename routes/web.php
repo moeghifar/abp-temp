@@ -20,16 +20,6 @@ Route::get('/home', function () {
 });
 
 Route::get('/data/supplier/{supplier_id?}', function ($supplier_id = null) {
-    // switch($action) {
-    //     case 'view' :  
-    //         break;
-    //     default :
-    //         if ($action != null)
-    //         {
-    //             return abort(404, "Wrong URI Path");
-    //         }
-    // }
-    // $params['action']           = $action;
     if($supplier_id != null && !is_int($customer_id)) {
         return abort(404,"Wrong URI Path");
     }
@@ -75,4 +65,9 @@ Route::get('/sales/return/{sales_return_id?}', function ($sales_return_id = null
     }
     $params['sales_return_id'] = $sales_return_id;
     return view('page/sales/return',$params);
+});
+
+Route::get('/table/coa/', function () {
+    $params[] = '';
+    return view('page/table/coa',$params);
 });

@@ -90,7 +90,7 @@
 @endsection
 @push('custom_js')
     <script>
-        var mandatory = ["idName","apiToken","urlID","urlGet","urlAdd","outputColumn","actionButton"]
+        var mandatory = ["idName","apiToken","urlID","urlGet","urlAdd","outputColumn","actionButton"];
         var common = {};
         common.idName       = 'customer';
         common.apiToken     = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';

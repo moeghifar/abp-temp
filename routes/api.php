@@ -45,3 +45,6 @@ Route::put('v1/product/{product}','ProductController@update')->middleware('auth:
 Route::delete('v1/product/{product}','ProductController@delete')->middleware('auth:api');
 Route::get('v1/product/get','ProductController@get')->middleware('auth:api');
 Route::get('v1/product/{id}','ProductController@getById')->middleware('auth:api');
+
+// Cart of accounts API
+Route::get('v1/table/coa/get','TableController@getCoa')->middleware('auth:api');

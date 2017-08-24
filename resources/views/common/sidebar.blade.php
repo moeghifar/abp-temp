@@ -38,8 +38,11 @@
                 <li>
                     <a href="/accounting/view" class="waves-effect"><i class="glyphicon glyphicon-transfer"></i><span> Accounting </span></a>
                 </li>
-                <li>
-                    <a href="/coa/view" class="waves-effect"><i class="glyphicon glyphicon-tasks"></i><span> Cart of Accounts</span></a>
+                <li class="has_sub">
+                    <a class="waves-effect"><i class="glyphicon glyphicon-tasks"></i><span> Tables </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <ul class="list-unstyled">
+                        <li><a href="/table/coa">Cart of Accounts</a></li>
+                    </ul>
                 </li>
                 <li class="has_sub">
                     <a class="waves-effect"><i class="glyphicon glyphicon-briefcase"></i><span> Report </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>

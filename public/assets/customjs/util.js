@@ -9,17 +9,17 @@ var nyastUtil = (function () {
     return {
         numberFormat : function(valNum,prefix,separator) {
             if (typeof valNum == 'undefined') {
-                valNum = ""; /* default valNum content */
+                valNum = "";
             } else {
                 valNum = valNum.toString();
             }
             if (typeof prefix == 'undefined') {
-                prefix = ''; /* default prefix is empty */
+                prefix = ''; 
             } else {
                 prefix = prefix + ' ';
             }
             if (typeof separator == 'undefined') {
-                separator = ','; /* default separator length */
+                separator = '.';
             }
             var buildNumberFormat = valNum.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1'+separator);
             return prefix + buildNumberFormat;
