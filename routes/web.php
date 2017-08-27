@@ -43,13 +43,15 @@ Route::get('/data/product/{product_id?}', function ($product_id = null) {
     return view('page/data/product',$params);
 });
 
-Route::get('/sales/order/{sales_order_id?}', function ($sales_order_id = null) {
-    if($sales_order_id != null && !is_int($sales_order_id)) {
-        return abort(404,"Wrong URI Path");  
-    }
-    $params['sales_order_id'] = $sales_order_id;
-    return view('page/sales/order',$params);
-});
+// Route::get('/sales/order/{sales_order_id?}', function ($sales_order_id = null) {
+//     if($sales_order_id != null && !is_int($sales_order_id)) {
+//         return abort(404,"Wrong URI Path");  
+//     }
+//     $params['sales_order_id'] = $sales_order_id;
+//     return view('page/sales/order',$params);
+// });
+
+Route::get('/sales/order/debug', 'SalesOrderController@debug');
 
 Route::get('/sales/invoice/{sales_invoice_id?}', function ($sales_invoice_id = null) {
     if($sales_invoice_id != null && !is_int($sales_invoice_id)) {

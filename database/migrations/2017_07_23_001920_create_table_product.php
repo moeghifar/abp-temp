@@ -19,7 +19,7 @@ class CreateTableProduct extends Migration
             $table->string('product_name');
             $table->integer('supplier_id')->unsigned();
             $table->integer('price');
-            $table->integer('unit');
+            $table->string('unit');
             $table->timestamps();
         });
         Schema::table('products', function(Blueprint $table) {

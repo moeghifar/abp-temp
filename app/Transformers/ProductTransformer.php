@@ -16,7 +16,7 @@ class ProductTransformer extends TransformerAbstract
             'supplier_id'   => $product->supplier_id,
             'supplier_name' => $supplier_data->supplier_name,
             'price'         => $product->price,
-            'unit'         => $product->unit,
+            'unit'          => $product->unit,
             'created'       => $product->created_at,
             'updated'       => $product->updated_at,
         ];

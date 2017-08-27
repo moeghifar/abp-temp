@@ -3,6 +3,13 @@
 @section('page_title', 'Sales Order Data')
 @section('user_name', 'Administrator')
 @section('content')
+    <ul>
+    @foreach ($salesOrder as $so )
+        <li>
+            {{ $so->id }} - {{ $so->sales_number }}
+        </li>
+    @endforeach
+    </ul>
     @if($sales_order_id == null)
         <div class="row">
             <div class="col-md-12">

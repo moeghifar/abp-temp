@@ -51,8 +51,9 @@ class SupplierController extends Controller
         return response()->json($response, $responseCode);
     }
 
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, Supplier $supplier, $id)
     {
+        $supplier = $supplier->find($id);
     	$validator = Validator::make($request->all(), [
     		'supplier_name' 	=> 'required|min:3',
     		'supplier_address' 	=> 'required|min:10',
@@ -75,9 +76,9 @@ class SupplierController extends Controller
         return response()->json($response, $responseCode);
     }
 
-    public function delete(Supplier $supplier)
+    public function delete(Supplier $supplier, $id)
     {
-    	$supplier->delete();
+    	$supplier->find($id)->delete();
     	return response()->json([
     		'message' => 'Data was deleted',
     	]);

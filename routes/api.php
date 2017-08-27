@@ -27,8 +27,8 @@ Route::get('v1/users/profile','UserController@profile')->middleware('auth:api');
 
 // Supplier API
 Route::post('v1/supplier/add','SupplierController@add')->middleware('auth:api');
-Route::put('v1/supplier/{supplier}','SupplierController@update')->middleware('auth:api');
-Route::delete('v1/supplier/{supplier}','SupplierController@delete')->middleware('auth:api');
+Route::put('v1/supplier/{id}','SupplierController@update')->middleware('auth:api');
+Route::delete('v1/supplier/{id}','SupplierController@delete')->middleware('auth:api');
 Route::get('v1/supplier/get','SupplierController@get')->middleware('auth:api');
 Route::get('v1/supplier/{id}','SupplierController@getById')->middleware('auth:api');
 
@@ -48,3 +48,10 @@ Route::get('v1/product/{id}','ProductController@getById')->middleware('auth:api'
 
 // Cart of accounts API
 Route::get('v1/table/coa/get','TableController@getCoa')->middleware('auth:api');
+
+// Sales Order API
+Route::post('v1/sales/order/add','SalesOrderController@add')->middleware('auth:api');
+Route::put('v1/sales/order/{id}','SalesOrderController@update')->middleware('auth:api');
+Route::delete('v1/sales/order/{id}','SalesOrderController@delete')->middleware('auth:api');
+Route::get('v1/sales/order/get','SalesOrderController@get')->middleware('auth:api');
+Route::get('v1/sales/order/{id}','SalesOrderController@getById')->middleware('auth:api');
