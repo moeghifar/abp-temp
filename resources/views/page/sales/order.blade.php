@@ -3,14 +3,7 @@
 @section('page_title', 'Sales Order Data')
 @section('user_name', 'Administrator')
 @section('content')
-    <ul>
-    @foreach ($salesOrder as $so )
-        <li>
-            {{ $so->id }} - {{ $so->sales_number }}
-        </li>
-    @endforeach
-    </ul>
-    @if($sales_order_id == null)
+    @if($sales_order == null)
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
@@ -18,13 +11,14 @@
                         <div class="m-b-30 m-t-0">
                             <button id="btnAction" data-action="add" type="button" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-plus"></i> Add Sales Order</button>
                         </div>
-                        <table id="datatable-custom-table" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        <table id="datatable-custom-table" class="table table-striped table-bordered dt-responsive no-sort" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Sales Order</th>
-                                <th>Product</th>
-                                <th>Qty</th>
+                                <th class="number-order">#</th>
+                                <th>Sales Number</th>
+                                <th>Customer Name</th>
+                                <th>Date</th>
+                                <th>Total Price</th>
                                 <th class="action">Action</th>
                             </tr>
                             </thead>
@@ -36,7 +30,7 @@
             </div>
         </div> <!-- End Row -->
     @else
-    Sales Order Id : {{ $sales_order_id }}
+    Sales Order Id : {{ $sales_order }}
     @endif
     <!-- BOF modal with form -->
     <div id="modalForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -103,7 +97,7 @@
         common.urlID        = '/api/v1/sales/order/'; 
         common.urlGet       = '/api/v1/sales/order/get'; 
         common.urlAdd       = '/api/v1/sales/order/add';  
-        common.outputColumn = ["result_order","sales_order_name","sales_order_phone","sales_order_address","result_action"];
+        common.outputColumn = ["result_order","sales_number","customer_name","date","price","result_action"];
         common.actionButton = '<button id="btnAction" data-action="edit" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button> <button id="btnAction" data-action="delete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>';
     </script>
     <script src="/assets/customjs/main.js"></script>

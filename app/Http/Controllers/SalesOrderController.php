@@ -10,10 +10,9 @@ use Auth;
 class SalesOrderController extends Controller
 {
 
-    public function Debug(SalesOrder $salesOrder)
+    public function debug(SalesOrder $salesOrder)
     {
         $data['sales_order_id'] = null;
-        $so['time'] = "0.1230 ms";
         $so['total'] = SalesOrder::count();
         $so['data'] = SalesOrder::all();
         foreach($so['data'] as $i => $v) {
@@ -24,11 +23,17 @@ class SalesOrderController extends Controller
 
     public function get(SalesOrder $salesOrder)
     {
-    	$supplierResponse = $supplier->orderBy('id', 'desc')->get();
-    	return fractal()
-    		->collection($supplierResponse)
-    		->transformWith(new SupplierTransformer)
-    		->respond();
+        $so['data'] = SalesOrder::all();
+        foreach($so['data'] as $i => $v) {
+            $v->price = $v->total_price;
+            $v->customer_name = SalesOrder::find($v->id)->customer->customer_name;
+        }
+        return $so;
+    	// $supplierResponse = $supplier->orderBy('id', 'desc')->get();
+    	// return fractal()
+    	// 	->collection($supplierResponse)
+    	// 	->transformWith(new SupplierTransformer)
+    	// 	->respond();
     }
 
     public function getById(Supplier $supplier, $id)
