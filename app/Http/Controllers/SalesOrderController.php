@@ -45,25 +45,27 @@ class SalesOrderController extends Controller
     		->respond();
     }
 
-    public function add(Request $request, Supplier $supplier)
+    public function add(Request $request, SalesOrder $salesOrder)
     {
-        $validator = Validator::make($request->all(), [
-            'supplier_name'     => 'required|min:3',
-            'supplier_address'  => 'required|min:10',
-            'supplier_phone'    => 'required|min:10|numeric',
-        ]);
-        if ($validator->fails()) {
-            $response = $validator->errors();
-            $responseCode = 404;
-        } else {
-            $supplierResponse = $supplier->create([
-                'supplier_name'		=> $request->supplier_name,
-                'supplier_address'	=> $request->supplier_address,
-                'supplier_phone'	=> $request->supplier_phone,
-            ]);
-            $response = fractal()->item($supplierResponse)->transformWith(new SupplierTransformer)->toArray();
-            $responseCode = 201;
-        }
+        $response = $request;
+        $responseCode = 200;
+        // $validator = Validator::make($request->all(), [
+        //     'supplier_name'     => 'required|min:3',
+        //     'supplier_address'  => 'required|min:10',
+        //     'supplier_phone'    => 'required|min:10|numeric',
+        // ]);
+        // if ($validator->fails()) {
+        //     $response = $validator->errors();
+        //     $responseCode = 404;
+        // } else {
+        //     $supplierResponse = $supplier->create([
+        //         'supplier_name'		=> $request->supplier_name,
+        //         'supplier_address'	=> $request->supplier_address,
+        //         'supplier_phone'	=> $request->supplier_phone,
+        //     ]);
+        //     $response = fractal()->item($supplierResponse)->transformWith(new SupplierTransformer)->toArray();
+        //     $responseCode = 201;
+        // }
         return response()->json($response, $responseCode);
     }
 

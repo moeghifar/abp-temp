@@ -34,6 +34,7 @@ class ProductController extends Controller
             'product_name'      => 'required|min:3',
             'supplier_id'       => 'required|min:1|numeric',
             'price'             => 'required|min:3|numeric',
+            'unit'              => 'required|min:3',
         ]);
         if ($validator->fails()) {
             $response = $validator->errors();
@@ -43,6 +44,7 @@ class ProductController extends Controller
                 'product_name'	=> $request->product_name,
                 'supplier_id'	=> $request->supplier_id,
                 'price'	        => $request->price,
+                'unit'	        => $request->unit,
             ]);
             $response = fractal()->item($productResponse)->transformWith(new ProductTransformer)->toArray();
             $responseCode = 201;
