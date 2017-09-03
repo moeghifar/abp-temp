@@ -1,87 +1,5 @@
 $(document).ready(function(){
-    /**
-     * These group of functions are used to display data 
-     * using ajax with datatables integration 
-     * which calls to requested API endpoint
-     */
-    var initialized = varInit();
-    if (initialized) { 
-        reload();
-    }
-    /**
-    * varInit function
-    * used to intialize variables 
-    */
-    function varInit(){
-        for(l=0;l<mandatory.length;l++){
-            if(typeof common[mandatory[l]] == "undefined") {
-                console.log("object "+mandatory[l]+" not defined yet!");
-                return false;
-            }
-        }
-        return true;
-    }
-    /**
-     * reload function
-     * used to reload data dynamically 
-     * call this function after every action
-     */
-    function reload() {
-        $.ajax({
-            headers : {
-                'Accept': 'application/json',
-                'Authorization': common.apiToken,
-            },
-            url: common.urlGet,
-            method: 'GET',
-        }).done(function(getData){
-            console.log(getData.data);
-            var jsonData = buildData(getData.data);
-            var jsonCol = buildColumn(common.outputColumn);
-            renderTable(jsonData, jsonCol);
-        });
-    }
-    /**
-     * buildData function
-     * used to build data by embedding necessary data parameters such result_order & result_action 
-     */
-    function buildData(jData){
-        for(lp = 0; lp < jData.length; lp++){
-            var actionWrapper = "<span data-id='"+jData[lp][common.idName+"_id"]+"'>"+common.actionButton+"</span>";
-            jData[lp].price = nyastUtil.numberFormat(jData[lp].price,'Rp '); 
-            jData[lp].result_order = lp+1;
-            jData[lp].result_action = actionWrapper;
-        }
-        return jData;
-    }
-    /**
-     * buildColumn function
-     * used to build column which the result will be used by datatables
-     */
-    function buildColumn(cData){
-        var coData = [];
-        for(lp = 0; lp < cData.length; lp++){
-            var cObj = {};
-            cObj.data = cData[lp];
-            coData.push(cObj); 
-        }
-        return coData;       
-    }
-    /**
-     * renderTable function
-     * used to render datatable based on data and column generated before
-     */
-    function renderTable(jsonData, jsonCol){
-        var tabel = $("#datatable-custom-table").DataTable();
-        tabel.destroy();    
-        tabel = $("#datatable-custom-table").DataTable({
-            "data"          : jsonData,
-            "columns"       : jsonCol,
-            "aoColumnDefs"  : [
-                { "bSortable": false, "aTargets": ["_all"] }
-            ]
-        });
-    }   
+    selectGenerator('add');
     /**
      * Submit form event listener
      * this submit listener will execute form submission
@@ -200,92 +118,6 @@ $(document).ready(function(){
         });
     }
     /**
-     * generateEditForm function
-     * this function used to create edit form 
-     * by getting data with ajax call 
-     * and append them to form inside modal
-     */
-    function generateEditForm(id){
-        return $.ajax({
-            headers : {
-                'Accept': 'application/json',
-                'Authorization': common.apiToken,
-            },
-            url: common.urlID+id,
-            method: 'GET',
-        }).success(function(data){
-            // create hidden input id
-            var idInput = '<input type="hidden" name="id" value="'+id+'">';
-            // append hidden to modal form
-            $('#appendContainer').append(idInput);
-            // this function will parse data & append it to the modal form
-            parseDataToHtml(data.data);
-        });
-    }
-    /**
-     * parseDataToHtml function
-     * used to parse data which used to edit 
-     * and append them to html form
-     */
-    function parseDataToHtml(data) {
-        console.log("[LOG] execute parseDataToHtml");
-        $.each(data, function(className, itemID) {
-            var selectObject = {};
-            if ($('#formContainer select[name="' + className + '"]').length) {
-                console.log('generate select for : ' + className +' = '+ itemID);
-                // execute auto select generator if exist
-                selectObject.className = className; 
-                selectObject.itemID = itemID; 
-                selectGenerator('edit',selectObject);  
-            } 
-            $("#formContainer input[name='" + className + "']").val(itemID);
-        });
-        return 
-    }
-    /**
-     * confirmDeleteSA function
-     * confirm deleting data with sweet alert confirm dialog
-     * send id and message
-     */
-    function confirmDeleteSA(id){
-        // new function using sweet alert confirm
-        swal({
-            title: 'Are you sure?',
-            text: 'Your data will be deleted, if you proceed this confirmation!',
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: 'btn-primary',
-            confirmButtonText: "Yes",
-            closeOnConfirm: false
-        }, function () {
-            deleteData(id);
-        });
-    }
-    /**
-     * deleteData function
-     * used to delete data using ajax with method Delete
-     * and reload the data if succeed
-     */
-    function deleteData(id){
-        var notif = "Delete data succeed!";
-        $.ajax({
-            headers : {
-                'Accept': 'application/json',
-                'Authorization': common.apiToken,
-            },
-            url: common.urlID+id,
-            method: 'DELETE',
-        }).success(function(data){
-            // success handler
-            console.log("Delete Succeed!");
-            // reload data
-            reload();
-            // notification
-            swal("Deleted!", "Your data has been deleted.", "success");
-        });
-        return true;
-    }
-    /**
      * Automated `Select-Generator`
      */
     function selectGenerator(action,selectObject) {
@@ -310,7 +142,7 @@ $(document).ready(function(){
         
     }
     function selectGeneratorAjaxCall(t, idSelect) {
-        var ajaxURI = t.data('api');
+        var ajaxURI = t.data('api')+'get';
         var idName = t.data('idname');
         var selectData = '';
         t.html();
@@ -366,7 +198,7 @@ $(document).ready(function(){
         var toDuplicate = $('#'+dataDuplicate).html();
         var buildIdElem = dataDuplicate + '-' + duplicateCounter;
         var btnRemove = ''
-            + '<div class="col-md-2" >'
+            + '<div class="col-md-1" >'
             + '<div class="form-group">'
             + '<a data-delete="#' + buildIdElem + '" class="btn btn-md btn-danger deleteDuplicate" style="margin-top:25px;"><i class="fa fa-remove"></i></a>'
             + '<small></small>'
@@ -374,8 +206,8 @@ $(document).ready(function(){
             + '</div>';
         var wrapDuplicated = ''
             + '<div class="row" id="' + buildIdElem + '">'
-            + toDuplicate
             + btnRemove
+            + toDuplicate
             + '</div>'
             ;
         $('#'+dataDuplicate).parents('.duplicator').append(wrapDuplicated);
@@ -389,4 +221,50 @@ $(document).ready(function(){
         var dataDelete = $(this).data('delete');
         $(dataDelete).remove();
     });
+    /**
+     * get-live-data
+     */
+    $('body').on('change','.get-live-data',function(){
+        var t = $(this);
+        var ajaxURI = t.data('api') + t.val();
+        var idName = t.data('idname');
+        var dataGroup = t.parents('.row').attr('id');
+        // get data with ajax
+        return $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': common.apiToken,
+            },
+            url: ajaxURI,
+            method: 'GET',
+        }).success(function (getData) {
+            bindLiveData('build-sales-order',dataGroup ,getData.data);
+        });
+    });
+    $('body').on('keyup', '.qty', function () {
+        var dataGroup = $(this).parents('.row').attr('id');
+        // check price value
+        var getPrice = $('#' + dataGroup + ' .price').text();
+        var price = getPrice.replace(/\./g, '').replace('Rp ','');
+        var qty = $(this).val();
+        var qtyPrice = 0;
+        if (price != "") {
+            qtyPrice = qty * parseInt(price);
+        }
+        $('#' + dataGroup + ' .qty_price').text(nyastUtil.numberFormat(qtyPrice, 'Rp '));
+    });
+    /**
+     * Custom build declaration
+     */
+    function bindLiveData(option, dataGroup, rData) {
+        if (option == 'build-sales-order') {
+            var qty = $('#' + dataGroup + ' .qty').val();
+            var qtyPrice = 0;
+            if (qty > 0) {
+                qtyPrice = qty * rData['price'];
+            }
+            $('#' + dataGroup + ' .price').text(nyastUtil.numberFormat(rData['price'], 'Rp '));
+            $('#' + dataGroup + ' .qty_price').text(nyastUtil.numberFormat(qtyPrice, 'Rp '));
+        }
+    }
 });

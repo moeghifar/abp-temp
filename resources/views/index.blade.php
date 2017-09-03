@@ -10,6 +10,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <link rel="shortcut icon" href="/assets/images/favicon.ico">
         @include('common.css')
+        @stack('custom_css')
     </head>
     <body class="fixed-left">
         <!-- Begin page -->

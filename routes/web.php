@@ -44,16 +44,19 @@ Route::get('/data/product/{product_id?}', function ($product_id = null) {
 });
 
 Route::get('/sales/order/{sales_order?}', function ($sales_order = null) {
+    $view = 'page/sales/order';
     if($sales_order != null) {
         if(!is_int($sales_order)) {
-            return abort(404,"Wrong URI Path");  
+            if($sales_order == 'add') {
+                $view = 'page/sales/orderAdd';            
+            }
         } else {
             // temporary to 404 if number
             return abort(404,"Wrong URI Path");  
         }
     }
     $params['sales_order'] = $sales_order;
-    return view('page/sales/order', $params);
+    return view($view, $params);
 });
 
 Route::get('sales/order/test/debug','SalesOrderController@debug');

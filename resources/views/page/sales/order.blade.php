@@ -9,7 +9,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         <div class="m-b-30 m-t-0">
-                            <button id="btnAction" data-action="add" type="button" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-plus"></i> Add Sales Order</button>
+                            <a href="/sales/order/add" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-plus"></i> Add Sales Order</a>
                         </div>
                         <table id="datatable-custom-table" class="table table-striped table-bordered dt-responsive no-sort" cellspacing="0" width="100%">
                             <thead>
@@ -32,42 +32,6 @@
     @else
     Sales Order Id : {{ $sales_order }}
     @endif
-    <!-- BOF modal with form -->
-    <div id="modalForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">Form Sales Order</h4>
-                </div>
-                <form id="formContainer">
-                    <div class="modal-body">
-                            <div class="form-group">
-                                <label for="input1">Sales Order</label>
-                                <input type="text" class="form-control" name="supplier_name" placeholder="Supplier Name">
-                                <small></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="input2">Sales Order</label>
-                                <input type="text" class="form-control" name="supplier_phone" placeholder="Supplier Phone">
-                                <small></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="input3">Sales Order</label>
-                                <input type="text" class="form-control" name="supplier_address" placeholder="Supplier Address">
-                                <small></small>
-                            </div>
-                            <div id="appendContainer"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary waves-effect waves-light" id="save_data">Save changes</button>
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>    
-                    </div>
-                </form>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <!-- EOF modal with form -->
     <!-- BOF Modal with confirmation -->
     <div id="modalConfirm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -88,7 +52,11 @@
     </div><!-- /.modal -->
     <!-- EOF Modal with confirmation -->
 @endsection
+@push('custom_css')
+    <link href="/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+@endpush
 @push('custom_js')
+    <script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script>
         var mandatory = ["idName","apiToken","urlID","urlGet","urlAdd","outputColumn","actionButton"]
         var common = {};
@@ -98,7 +66,14 @@
         common.urlGet       = '/api/v1/sales/order/get'; 
         common.urlAdd       = '/api/v1/sales/order/add';  
         common.outputColumn = ["result_order","sales_number","customer_name","date","price","result_action"];
-        common.actionButton = '<button id="btnAction" data-action="edit" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button> <button id="btnAction" data-action="delete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>';
+        common.actionButton = '<a href="sales/order/{id}" style="margin-bottom:5px;" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i></a> <button id="btnAction" data-action="delete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>';
+        jQuery('#datepicker-autoclose').datepicker({
+            startView: 'decade',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            autoclose: true,
+            todayHighlight: true
+        });
     </script>
     <script src="/assets/customjs/main.js"></script>
 @endpush
