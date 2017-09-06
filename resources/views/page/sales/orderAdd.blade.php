@@ -7,11 +7,11 @@
     <div class="col-sm-12">
         <div class="panel panel-primary">
             <div class="panel-body">
-                <form>
+                <form id="formContainer">
 
                     <div class="form-group">
                         <label for="input1">Sales Order Number</label>
-                        <input type="text" class="form-control" name="sales_number" placeholder="Sales Order Number">
+                        <input type="text" class="form-control" name="sales_number" placeholder="Sales Order Number" required>
                         <small></small>
                     </div>
                     <div class="row">
@@ -27,7 +27,7 @@
                                 <label>Date</label>
                                 <div>
                                     <div class="input-group">
-                                        <input type="text" name="date" class="form-control" placeholder="Sales Order Date" id="datepicker-autoclose">
+                                        <input type="text" name="date" class="form-control" placeholder="Sales Order Date" id="datepicker-autoclose" required>
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar"></i></span>
                                     </div><!-- input-group -->
                                 </div>
@@ -46,28 +46,28 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="input2">Product Name</label>
-                                        <select data-target="price" data-generate="select-generator" data-idname="product" data-api="/api/v1/product/" name="product_id[]" class="form-control get-live-data"></select>
+                                        <select data-target="price" data-generate="select-generator" data-idname="product" data-api="/api/v1/product/" name="product_id" class="form-control get-live-data"></select>
                                         <small></small>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="input3">Qty</label>
-                                        <input type="text" pattern="[1-9]*" min="1" class="form-control qty" name="qty[]" placeholder="Quantity" value="1">
+                                        <input type="text" pattern="[1-9][0-9]*" min="1" class="form-control qty" name="qty" placeholder="Quantity" value="1" required>
                                         <small></small>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="input3">Price</label>
-                                        <p class="price" style="padding-top:10px;"><p>
+                                        <input type="text" class="form-control price" readonly>
                                         <small></small>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="input3">Qty * Price</label>
-                                        <p class="qty_price" style="padding-top:10px;"><p>
+                                        <input type="text" class="form-control qty_price" name="qty_price" readonly >
                                         <small></small>
                                     </div>
                                 </div>
@@ -75,6 +75,7 @@
                         </div>                            
                     </div>
                     <div id="appendContainer"></div>
+                    <input type="hidden" name="multiple" value="product_id,qty,qty_price">
                     <input class="btn btn-success" type="submit" name="submit" value="Submit">
                     <input class="btn btn-warning" type="reset" name="reset" value="Reset">
                 </form>

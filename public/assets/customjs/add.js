@@ -7,51 +7,53 @@ $(document).ready(function(){
      */
     $("body").on("submit", "#formContainer", function(e){
         var serializedInput = $(this).serializeArray();
-        console.log(serializedInput);
-        var submitedData = generateRawJson(serializedInput);
+        // console.log(JSON.stringify(serializedInput));
+        var getMultiple = $('#formContainer [name="multiple"]').val();
+        var multiple = getMultiple.split(",");
+        console.log(multiple);
+        var submitedData = generateRawJson(serializedInput,multiple);
         var action = submitedData._action;
         var id = submitedData.id;
         var ajaxUri, ajaxMethod;
         console.log(JSON.stringify(submitedData));
-        if (action == 'add') {
-            ajaxMethod = 'POST';
-            ajaxUri = common.urlAdd;
-            notif = "Add data succeed!";
-        } else if (action == 'edit') {
-            ajaxMethod = 'PUT';
-            ajaxUri = common.urlID+id;
-            notif = "Edit data succeed!";
-        } else {
-            alert('Wrong action type!');
-        }
-        $.ajax({
-            headers : {
-                'Accept': 'application/json',
-                'Content-Type' : 'application/json',
-                'Authorization': common.apiToken,
-            },
-            data: JSON.stringify(submitedData),
-            url: ajaxUri,
-            method: ajaxMethod,
-        }).error(function(data){
-            // handle error
-            console.log("Error Occured!");
-            // parse error and append to html
-            parseErrorToHtml(data.responseJSON);
-            // var fixError = parseErrorToHtml(data.responseJSON);
-            // $("#errorContainer").html(fixError);
-        }).success(function(data){
-            // success handler
-            console.log("OK Succeed!");
-            // close dialog
-            $('#modalForm').modal('hide');
-            // reload data
-            reload();
-            // send notification
-            notifSA(notif);
-        });
+        // if (action == 'add') {
+        //     ajaxMethod = 'POST';
+        //     ajaxUri = common.urlAdd;
+        //     notif = "Add data succeed!";
+        // } else if (action == 'edit') {
+        //     ajaxMethod = 'PUT';
+        //     ajaxUri = common.urlID+id;
+        //     notif = "Edit data succeed!";
+        // } else {
+        //     alert('Wrong action type!');
+        // }
+        // $.ajax({
+        //     headers : {
+        //         'Accept': 'application/json',
+        //         'Content-Type' : 'application/json',
+        //         'Authorization': common.apiToken,
+        //     },
+        //     data: JSON.stringify(submitedData),
+        //     url: ajaxUri,
+        //     method: ajaxMethod,
+        // }).error(function(data){
+        //     // handle error
+        //     console.log("Error Occured!");
+        //     // parse error and append to html
+        //     parseErrorToHtml(data.responseJSON);
+        //     // var fixError = parseErrorToHtml(data.responseJSON);
+        //     // $("#errorContainer").html(fixError);
+        // }).success(function(data){
+        //     // success handler
+        //     console.log("OK Succeed!");
+        //     // close dialog
+        //     $('#modalForm').modal('hide');
+        //     // reload data
+        //     reload();
+        //     // send notification
+        //     notifSA(notif);
+        // });
         e.preventDefault();
-        return false;
     });
     /**
      * modal event listener
@@ -99,12 +101,30 @@ $(document).ready(function(){
      * which dynamically loop unindexed array 
      * from serializeArray function
      */
-    function generateRawJson(UnindexedArray) {
-        var IndexedArray = {};
-        $.map(UnindexedArray, function(n, i){
-            IndexedArray[n['name']] = n['value'];
+    function generateRawJson(UnindexedArray,multiple) {
+        var obj1 = { };
+        var obj2 = { };
+        var arr1 = [];
+        var ptr = 1;
+        $.map(UnindexedArray, function (n, i) {
+            if (multiple.indexOf(n['name']) < 0) {
+                obj1[n['name']] = cleanCurrency(n['value']);
+            } else {
+                if (ptr < multiple.length) {
+                    obj2[n['name']] = cleanCurrency(n['value']);
+                    ptr++;
+                } else {
+                    obj2[n['name']] = cleanCurrency(n['value']);
+                    arr1.push(obj2);
+                    obj2 = { };
+                    ptr = 1;
+                }
+            }
+            if(i == (UnindexedArray.length - 1)) {
+                obj1['multi'] = arr1;
+            }
         });
-        return IndexedArray;
+        return obj1;
     }
     /**
      * parseErrorToHtml function
@@ -244,14 +264,16 @@ $(document).ready(function(){
     $('body').on('keyup', '.qty', function () {
         var dataGroup = $(this).parents('.row').attr('id');
         // check price value
-        var getPrice = $('#' + dataGroup + ' .price').text();
-        var price = getPrice.replace(/\./g, '').replace('Rp ','');
-        var qty = $(this).val();
-        var qtyPrice = 0;
-        if (price != "") {
-            qtyPrice = qty * parseInt(price);
+        var getPrice = $('#' + dataGroup + ' .price').val();
+        var price = cleanCurrency(getPrice);
+        if (price > 0){
+            var qty = $(this).val();
+            var qtyPrice = 0;
+            if (price != "") {
+                qtyPrice = qty * parseInt(price);
+            }
+            $('#' + dataGroup + ' .qty_price').val(nyastUtil.numberFormat(qtyPrice, 'Rp '));
         }
-        $('#' + dataGroup + ' .qty_price').text(nyastUtil.numberFormat(qtyPrice, 'Rp '));
     });
     /**
      * Custom build declaration
@@ -263,8 +285,18 @@ $(document).ready(function(){
             if (qty > 0) {
                 qtyPrice = qty * rData['price'];
             }
-            $('#' + dataGroup + ' .price').text(nyastUtil.numberFormat(rData['price'], 'Rp '));
-            $('#' + dataGroup + ' .qty_price').text(nyastUtil.numberFormat(qtyPrice, 'Rp '));
+            $('#' + dataGroup + ' .price').val(nyastUtil.numberFormat(rData['price'], 'Rp '));
+            $('#' + dataGroup + ' .qty_price').val(nyastUtil.numberFormat(qtyPrice, 'Rp '));
+        }
+    }
+    /**
+     * Clean from currency
+     */
+    function cleanCurrency(money) {
+        if (money.startsWith('Rp ')) {
+            return money.replace(/\./g, '').replace('Rp ', '').trim();
+        } else {
+            return money;
         }
     }
 });
