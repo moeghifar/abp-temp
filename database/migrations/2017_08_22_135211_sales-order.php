@@ -20,6 +20,7 @@ class SalesOrder extends Migration
             $table->integer('customer_id')->unsigned();
             $table->integer('total_price');
             $table->timestamps();
+            $table->softDeletes();
         });
         Schema::create('sales_order_product', function(Blueprint $table){
             $table->increments('id');
@@ -45,7 +46,7 @@ class SalesOrder extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sales_order');
         Schema::dropIfExists('sales_order_product');
+        Schema::dropIfExists('sales_order');
     }
 }

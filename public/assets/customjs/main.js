@@ -47,7 +47,12 @@ $(document).ready(function(){
      */
     function buildData(jData){
         for(lp = 0; lp < jData.length; lp++){
-            var actionWrapper = "<span data-id='"+jData[lp][common.idName+"_id"]+"'>"+common.actionButton+"</span>";
+            if (typeof jData[lp][common.idName + "_id"] == "undefined") {
+                id = jData[lp]["id"];
+            } else {
+                id = jData[lp][common.idName + "_id"];
+            }
+            var actionWrapper = "<span data-id='"+id+"'>"+common.actionButton+"</span>";
             jData[lp].price = nyastUtil.numberFormat(jData[lp].price,'Rp '); 
             jData[lp].result_order = lp+1;
             jData[lp].result_action = actionWrapper;
@@ -116,20 +121,12 @@ $(document).ready(function(){
             url: ajaxUri,
             method: ajaxMethod,
         }).error(function(data){
-            // handle error
             console.log("Error Occured!");
-            // parse error and append to html
             parseErrorToHtml(data.responseJSON);
-            // var fixError = parseErrorToHtml(data.responseJSON);
-            // $("#errorContainer").html(fixError);
         }).success(function(data){
-            // success handler
             console.log("OK Succeed!");
-            // close dialog
             $('#modalForm').modal('hide');
-            // reload data
             reload();
-            // send notification
             notifSA(notif);
         });
         e.preventDefault();
@@ -141,37 +138,27 @@ $(document).ready(function(){
      * there are 3 conditions which are add, edit & delete
      */
     $('body').on('click', '#btnAction', function(){
-        // read action from `data-action` attribute
         var action = $(this).data('action');
-        // clear input form
         $('#formContainer input').val("");
-        // clear error info
         $("#formContainer #errorContainer").remove();
-        // 1st condition detect if it was add / edit
         if (action == 'add' || action == 'edit') { 
-            // 1st nested condition detect if it edit
             if (action == 'edit') {
-                // append html and perform ajax data binding if required
                 var getId = $(this).parent().data('id');
-                // generate edit form by calling generateEditForm function
                 generateEditForm(getId);
             } else {
-                // execute auto select generator if exist
                 selectGenerator(action);
             }
-            // create action input type, used to manipulate ajax form submit
             var actionInput = '<input type="hidden" name="_action" value="'+action+'">';
-            // appending action input type above 
             $('#appendContainer').html(actionInput);
-            // open modal
             $("#modalForm").modal('toggle');
-        } else if (action == 'delete'){
-            // get id
+        } else if (action == 'delete')  {
             var getId = $(this).parent().data('id');
-            // do delete by calling confirmWithModal function 
+            console.log(getId);
             confirmDeleteSA(getId);
+        } else if (action == 'view') {
+            var getId = $(this).parent().data('id');
+            window.location.href = window.location.href + "/" + getId;
         } else {
-            // last condition detect if the action is malformed
             alert('Wrong action type!');
         }
     });
@@ -214,11 +201,8 @@ $(document).ready(function(){
             url: common.urlID+id,
             method: 'GET',
         }).success(function(data){
-            // create hidden input id
             var idInput = '<input type="hidden" name="id" value="'+id+'">';
-            // append hidden to modal form
             $('#appendContainer').append(idInput);
-            // this function will parse data & append it to the modal form
             parseDataToHtml(data.data);
         });
     }
@@ -233,7 +217,6 @@ $(document).ready(function(){
             var selectObject = {};
             if ($('#formContainer select[name="' + className + '"]').length) {
                 console.log('generate select for : ' + className +' = '+ itemID);
-                // execute auto select generator if exist
                 selectObject.className = className; 
                 selectObject.itemID = itemID; 
                 selectGenerator('edit',selectObject);  
@@ -276,11 +259,8 @@ $(document).ready(function(){
             url: common.urlID+id,
             method: 'DELETE',
         }).success(function(data){
-            // success handler
             console.log("Delete Succeed!");
-            // reload data
             reload();
-            // notification
             swal("Deleted!", "Your data has been deleted.", "success");
         });
         return true;
@@ -314,7 +294,6 @@ $(document).ready(function(){
         var idName = t.data('idname');
         var selectData = '';
         t.html();
-        // get data with ajax
         return $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -380,7 +359,6 @@ $(document).ready(function(){
             ;
         $('#'+dataDuplicate).parents('.duplicator').append(wrapDuplicated);
         duplicateCounter++;
-        // console.log(wrapDuplicated);
     });
     /**
      * Delete duplicator function

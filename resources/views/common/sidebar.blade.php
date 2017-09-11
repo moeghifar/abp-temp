@@ -18,9 +18,9 @@
                 <li class="has_sub">
                     <a class="waves-effect"><i class="glyphicon glyphicon-tags"></i><span> Sales </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="/sales/order">Sales Order</a></li>
-                        <li><a href="/sales/invoice">Sales Invoice</a></li>
-                        <li><a href="/sales/return">Sales Return</a></li>
+                        <li><a href="/sales/order/view">Sales Order</a></li>
+                        <li><a href="/sales/invoice/view">Sales Invoice</a></li>
+                        <li><a href="/sales/return/view">Sales Return</a></li>
                     </ul>
                 </li>
                 <li class="has_sub">
