@@ -70,17 +70,33 @@
     @section('page_title', 'Detail Sales Order Data')
     @section('user_name', 'Administrator')
     @section('content')
-
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table class="table table-striped">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endsection
     @push('custom_js')
         <script>
-            var mandatory = ["idName","apiToken","urlID"]
+            var mandatory = ["idName","apiToken","urlID","dataOutput"]
             var common = {};
             common.idName       = 'sales_order';
             common.apiToken     = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';
             common.urlID        = '/api/v1/sales/order/' + {{$id}};   
-            common.outputColumn = ["result_order","sales_number","customer_name","date","price","result_action"];
-            common.actionButton = '<button id="btnAction" data-action="view" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-eye"></i></button> <button id="btnAction" data-action="delete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>';
+            common.dataOutput   =   {
+                                        "sales_number": "Sales Number",
+                                        "date": "Sales Date",
+                                        "total_price": "Total Price"
+                                    };
         </script>
         <script src="/assets/customjs/view.js"></script>
     @endpush
@@ -95,7 +111,6 @@
             <div class="panel panel-primary">
                 <div class="panel-body">
                     <form id="formContainer">
-
                         <div class="form-group">
                             <label for="input1">Sales Order Number</label>
                             <input type="text" class="form-control" name="sales_number" placeholder="Sales Order Number" required>

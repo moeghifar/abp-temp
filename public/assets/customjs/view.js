@@ -35,56 +35,33 @@ $(document).ready(function(){
             url: common.urlID,
             method: 'GET',
         }).done(function(getData){
-            console.log(getData.data);
-            // var jsonData = buildData(getData.data);
-            // var jsonCol = buildColumn(common.outputColumn);
-            // renderTable(jsonData, jsonCol);
+            // console.log(getData.data);
+            var tblRows = buildData(getData.data);
+            $('.table').html(tblRows);
         });
     }
     /**
      * buildData function
-     * used to build data by embedding necessary data parameters such result_order & result_action 
+     * 
      */
-    function buildData(jData){
-        for(lp = 0; lp < jData.length; lp++){
-            if (typeof jData[lp][common.idName + "_id"] == "undefined") {
-                id = jData[lp]["id"];
-            } else {
-                id = jData[lp][common.idName + "_id"];
-            }
-            var actionWrapper = "<span data-id='"+id+"'>"+common.actionButton+"</span>";
-            jData[lp].price = nyastUtil.numberFormat(jData[lp].price,'Rp '); 
-            jData[lp].result_order = lp+1;
-            jData[lp].result_action = actionWrapper;
+    function buildData(bData) {
+        var tblRows = "";
+        for (var val in common.dataOutput) {
+            console.log(val + " -> " + bData[val]);
+            // if (typeof bData[val] != "undefined") {
+                if( val == 'total_price') {
+                    bData[val] = nyastUtil.numberFormat(bData[val],'Rp ');
+                }
+                tblRows += '<tr>'
+                    + '<td>'
+                    + common.dataOutput[val]
+                    + '</td>'
+                    + '<td>'
+                    + bData[val]
+                    + '</td>'
+                    + '</tr>';
+            // }
         }
-        return jData;
+        return tblRows;
     }
-    /**
-     * buildColumn function
-     * used to build column which the result will be used by datatables
-     */
-    function buildColumn(cData){
-        var coData = [];
-        for(lp = 0; lp < cData.length; lp++){
-            var cObj = {};
-            cObj.data = cData[lp];
-            coData.push(cObj); 
-        }
-        return coData;       
-    }
-    /**
-     * renderTable function
-     * used to render datatable based on data and column generated before
-     */
-    function renderTable(jsonData, jsonCol){
-        var tabel = $("#datatable-custom-table").DataTable();
-        tabel.destroy();    
-        tabel = $("#datatable-custom-table").DataTable({
-            "data"          : jsonData,
-            "columns"       : jsonCol,
-            "aoColumnDefs"  : [
-                { "bSortable": false, "aTargets": ["_all"] }
-            ]
-        });
-    }   
 });
