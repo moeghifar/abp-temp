@@ -35,32 +35,65 @@ $(document).ready(function(){
             url: common.urlID,
             method: 'GET',
         }).done(function(getData){
-            // console.log(getData.data);
-            var tblRows = buildData(getData.data);
-            $('.table').html(tblRows);
+            console.log(getData);
+            if(getData.total == 0) {
+                alert("No Data!");
+                window.location.href = '/sales/order/view';
+            } else {
+                $('.table').each(function () {
+                    var idName = $(this).attr('id');
+                    var tblRows = parseData(idName, getData.data);
+                    $('#' + idName).html(tblRows);
+                }); 
+            }
         });
     }
     /**
-     * buildData function
      * 
+     * @param {*} selectorName 
+     * @param {*} dataName 
      */
-    function buildData(bData) {
+    function parseData(selectorName, selectorData) {
         var tblRows = "";
-        for (var val in common.dataOutput) {
-            console.log(val + " -> " + bData[val]);
-            // if (typeof bData[val] != "undefined") {
-                if( val == 'total_price') {
-                    bData[val] = nyastUtil.numberFormat(bData[val],'Rp ');
+        if (selectorData[selectorName].length > 0) {
+            for (var val in selectorData[selectorName]) {
+                // console.log(selectorData[selectorName][val]);
+                if (val == 0) {
+                    tblRows += '<thead><tr>';
+                    for (var value in common[selectorName]) {
+                        tblRows += '<th>'
+                            + common[selectorName][value]
+                            + '</th>';
+                    }
+                    tblRows += '</tr></thead>';
                 }
+                tblRows += '<tr>';
+                for (var value in common[selectorName]) {
+                    if (value == 'price' || value == 'qty_price') {
+                        selectorData[selectorName][val][value] = nyastUtil.numberFormat(selectorData[selectorName][val][value], 'Rp ');
+                    }
+                    tblRows += '<td>'
+                        + selectorData[selectorName][val][value]
+                        + '</td>';
+                }
+                tblRows += '</tr>';
+            }
+        } else {
+            for (var val in common[selectorName]) {
+                var appendData = "";
+                if (val == 'total_price') {
+                    selectorData[selectorName][val] = nyastUtil.numberFormat(selectorData[selectorName][val], 'Rp ');
+                }
+                appendData = selectorData[selectorName][val];
                 tblRows += '<tr>'
-                    + '<td>'
-                    + common.dataOutput[val]
+                    + '<td style="width:30%">'
+                    + common[selectorName][val]
                     + '</td>'
                     + '<td>'
-                    + bData[val]
+                    + appendData
                     + '</td>'
                     + '</tr>';
-            // }
+            }
         }
         return tblRows;
     }

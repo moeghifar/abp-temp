@@ -67,18 +67,24 @@
     @endpush
 @elseif($page == "view" && $id != null)
     @section('title', 'Detail Sales Order')
-    @section('page_title', 'Detail Sales Order Data')
+    @section('page_title', 'Detail Sales Order')
     @section('user_name', 'Administrator')
     @section('content')
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" id="table-container">
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-xs-12">
-                                <table class="table table-striped">
+                            <div class="col-xs-12" >
+                                <h4 class="alert alert-info">Sales Order</h4>
+                                <table class="table table-bordered" id="sales_order_data">
                                 </table>
-                            </div>
+                            </div> 
+                            <div class="col-xs-12">
+                                <h4 class="alert alert-info">Product Data</h4>
+                                <table class="table table-hover" id="product_data">
+                                </table>
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -87,16 +93,13 @@
     @endsection
     @push('custom_js')
         <script>
-            var mandatory = ["idName","apiToken","urlID","dataOutput"]
+            var mandatory = ["idName","apiToken","urlID","sales_order_data"]
             var common = {};
-            common.idName       = 'sales_order';
-            common.apiToken     = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';
-            common.urlID        = '/api/v1/sales/order/' + {{$id}};   
-            common.dataOutput   =   {
-                                        "sales_number": "Sales Number",
-                                        "date": "Sales Date",
-                                        "total_price": "Total Price"
-                                    };
+            common.idName           = 'sales_order';
+            common.apiToken         = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';
+            common.urlID            = '/api/v1/sales/order/' + {{$id}};   
+            common.sales_order_data = { "sales_number": "Sales Number", "date": "Sales Date", "total_price": "Total Price", "customer_data" : "Customer Data"};
+            common.product_data     = { "product_name": "Product Name", "qty": "Quantity", "price": "Price", "qty_price" : "Total Price"};
         </script>
         <script src="/assets/customjs/view.js"></script>
     @endpush

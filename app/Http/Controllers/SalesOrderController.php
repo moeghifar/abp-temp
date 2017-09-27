@@ -24,33 +24,36 @@ class SalesOrderController extends Controller
 
     public function get(SalesOrder $salesOrder)
     {
-        $so['data'] = SalesOrder::all();
+        $so['data'] = SalesOrder::orderBy('id', 'desc')->get();
         foreach($so['data'] as $i => $v) {
             $v->sales_order_id = $v->id;
             $v->price = $v->total_price;
             $v->customer_name = SalesOrder::find($v->id)->customer->customer_name;
         }
         return $so;
-    	// $supplierResponse = $supplier->orderBy('id', 'desc')->get();
-    	// return fractal()
-    	// 	->collection($supplierResponse)
-    	// 	->transformWith(new SupplierTransformer)
-    	// 	->respond();
     }
 
     public function getById(SalesOrder $salesOrder, $id)
     {
-    	$so['total'] = SalesOrder::count();
-        $so['data'] = SalesOrder::find(2);
-        if ($so['data'] != null) {
-            $so['data']['customer_data'] = SalesOrder::find($so['data']->id)->customer;
-            $so['data']['product_data'] = SalesOrder::find($so['data']->id)->product;
+        $salesOrderData = SalesOrder::find($id);
+        $so['total'] = count($salesOrderData);
+        if (count($salesOrderData) > 0) {
+            $so['data']['sales_order_data'] = $salesOrderData;
+            $getCustomer = SalesOrder::find($salesOrderData->id)->customer;
+            $so['data']['sales_order_data']['customer_data'] = $getCustomer->customer_name;
+            $getProduct = SalesOrder::find($salesOrderData ->id)->product;
+            $buildProduct = array();
+            if (count($getProduct) > 0) {
+                foreach($getProduct as $i => $v) {
+                    $buildProduct[$i]['product_name'] = $v->product_name;
+                    $buildProduct[$i]['price'] = $v->price;
+                    $buildProduct[$i]['qty'] = $v->pivot->qty;
+                    $buildProduct[$i]['qty_price'] = $v->pivot->qty_price;
+                }
+            }
+            $so['data']['product_data'] = $buildProduct;
         }
         return $so;
-    	// return fractal()
-    	// 	->item($supplierResponse)
-    	// 	->transformWith(new SupplierTransformer)
-    	// 	->respond();
     }
 
     public function add(Request $request, SalesOrder $salesOrder)
