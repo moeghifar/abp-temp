@@ -51,7 +51,12 @@ Route::get('v1/table/coa/get','TableController@getCoa')->middleware('auth:api');
 
 // Sales Order API
 Route::post('v1/sales/order/add','SalesOrderController@add')->middleware('auth:api');
-Route::put('v1/sales/order/{id}','SalesOrderController@update')->middleware('auth:api');
 Route::delete('v1/sales/order/{id}','SalesOrderController@delete')->middleware('auth:api');
 Route::get('v1/sales/order/get','SalesOrderController@get')->middleware('auth:api');
 Route::get('v1/sales/order/{id}','SalesOrderController@getById')->middleware('auth:api');
+
+// Sales Invoice API
+Route::post('v1/sales/invoice/add','SalesInvoiceController@add')->middleware('auth:api');
+Route::delete('v1/sales/invoice/{id}','SalesInvoiceController@delete')->middleware('auth:api');
+Route::get('v1/sales/invoice/get','SalesInvoiceController@get')->middleware('auth:api');
+Route::get('v1/sales/invoice/{id}','SalesInvoiceController@getById')->middleware('auth:api');

@@ -27,6 +27,7 @@ class SalesOrderController extends Controller
         $so['data'] = SalesOrder::orderBy('id', 'desc')->get();
         foreach($so['data'] as $i => $v) {
             $v->sales_order_id = $v->id;
+            $v->sales_order_name = $v->sales_number;
             $v->price = $v->total_price;
             $v->customer_name = SalesOrder::find($v->id)->customer->customer_name;
         }

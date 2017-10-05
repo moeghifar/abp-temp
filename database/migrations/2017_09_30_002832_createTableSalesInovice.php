@@ -16,6 +16,7 @@ class CreateTableSalesInovice extends Migration
         Schema::create('sales_invoice', function(Blueprint $table){
             $table->increments('id');
             $table->date('date');
+            $table->string('invoice_number');
             $table->integer('sales_order_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

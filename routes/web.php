@@ -60,20 +60,19 @@ Route::get('/sales/order/{page?}/{id?}', function ($page = null, $id = null) {
 
 Route::get('sales/order.debug','SalesOrderController@debug');
 
-Route::get('/sales/invoice/{sales_invoice_id?}', function ($sales_invoice_id = null) {
-    if($sales_invoice_id != null && !is_int($sales_invoice_id)) {
-        return abort(404,"Wrong URI Path");  
+Route::get('/sales/invoice/{page?}/{id?}', function ($page = null, $id = null) {
+    $view = 'page/sales/invoice';
+    if($page == null) {
+        return abort(404,"Wrong URI Path"); 
     }
-    $params['sales_invoice_id'] = $sales_invoice_id;
-    return view('page/sales/invoice',$params);
-});
-
-Route::get('/sales/return/{sales_return_id?}', function ($sales_return_id = null) {
-    if($sales_return_id != null && !is_int($sales_return_id)) {
-        return abort(404,"Wrong URI Path");  
+    if($id != null) {
+        if(!is_numeric($id)){
+            return abort(404,"Wrong URI Path"); 
+        }
     }
-    $params['sales_return_id'] = $sales_return_id;
-    return view('page/sales/return',$params);
+    $params['page'] = $page;
+    $params['id'] = $id;
+    return view($view, $params);
 });
 
 Route::get('/table/coa/', function () {

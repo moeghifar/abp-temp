@@ -145,7 +145,16 @@ $(document).ready(function(){
             if (typeof idSelect != 'undefined') {
                 selectData = selectGeneratorDataBuilder(getData.data, idName, idSelect);
             } else {
-                defaultSelectData = '<option value="0">choose ' + idName + ' data . . .</option>';
+                var idNameSplit = idName.split('_');
+                var chooseName = "";
+                if (idNameSplit.length > 1) {
+                    for (var l = 0; l < idNameSplit.length; l++ ) {
+                        chooseName += idNameSplit[l] + " ";
+                    }
+                } else {
+                    chooseName = idName;
+                }
+                defaultSelectData = '<option value="0">choose ' + chooseName + ' data . . .</option>';
                 selectData = defaultSelectData + selectGeneratorDataBuilder(getData.data, idName, null);
             }
             t.html(selectData);
