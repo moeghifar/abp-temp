@@ -31,13 +31,10 @@
                         <li><a href="/purchasing/return">Purchasing Return</a></li>
                     </ul>
                 </li>
-                <li class="menu-title">Extras</li>
                 <li>
                     <a href="/inventory/view" class="waves-effect"><i class="glyphicon glyphicon-check"></i><span> Inventory </span></a>
                 </li>
-                <li>
-                    <a href="/accounting/view" class="waves-effect"><i class="glyphicon glyphicon-transfer"></i><span> Accounting </span></a>
-                </li>
+                <li class="menu-title">Accounting</li>
                 <li class="has_sub">
                     <a class="waves-effect"><i class="glyphicon glyphicon-tasks"></i><span> Tables </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="list-unstyled">
@@ -45,10 +42,55 @@
                     </ul>
                 </li>
                 <li class="has_sub">
-                    <a class="waves-effect"><i class="glyphicon glyphicon-briefcase"></i><span> Report </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <a class="waves-effect"><i class="fa fa-bank"></i><span> Accounting </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="/inventory/view" class="waves-effect"> Set Assets </a>
+                        </li>
+                        <li>
+                            <a href="/inventory/view" class="waves-effect"> Set Balance </a>
+                        </li>
+                        <li>
+                            <a href="/inventory/view" class="waves-effect"> Customers Accounts </a>
+                        </li>
+                        <li>
+                            <a href="/inventory/view" class="waves-effect"> Suppliers Accounts </a>
+                        </li>
+                        <li>
+                            <a href="/inventory/view" class="waves-effect"> Journal </a>
+                        </li>
+                        <li>
+                            <a href="/inventory/view" class="waves-effect"> General Ledger </a>
+                        </li>
+                        <li>
+                            <a href="/inventory/view" class="waves-effect"> Unajusted Trial Balance </a>
+                        </li>
+                        <li>
+                            <a href="/inventory/view" class="waves-effect"> Adjusment Entries </a>
+                        </li>
+                        <li>
+                            <a href="/inventory/view" class="waves-effect"> Ajusted Trial Balance </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="has_sub">
+                    <a class="waves-effect"><i class="fa fa-newspaper-o"></i><span> Worksheet </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="list-unstyled">
                         <li><a href="/report/data">Data</a></li>
                     </ul>
+                </li>
+                <li class="has_sub">
+                    <a class="waves-effect"><i class="glyphicon glyphicon-briefcase"></i><span> Report </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <ul class="list-unstyled">
+                        <li><a href="/report/data">Income Statement</a></li>
+                        <li><a href="/report/data">Balance Sheet</a></li>
+                        <li><a href="/report/data">Statement of Owners Equity</a></li>
+                        <li><a href="/report/data">Sales Report</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title">Extra</li>
+                <li>
+                    <a href="/inventory/view" class="waves-effect"><i class="fa fa-line-chart"></i><span> Forecast </span></a>
                 </li>
             </ul>
         </div>

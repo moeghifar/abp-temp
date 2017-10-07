@@ -2896,6 +2896,7 @@ body.fixed-left .side-menu.left {
   padding: 0;
   position: relative;
   text-decoration: none;
+  white-space: nowrap;
 }
 .navbar-nav > li > a.notification-icon-box {
   line-height: 70px;
@@ -2946,6 +2947,7 @@ body.fixed-left .side-menu.left {
   background-color: #262c30;
   height: 50px !important;
   line-height: 1.5;
+  text-overflow: ellipsis;
 }
 #sidebar-menu > ul > li > a:hover {
   background-color: #1b1f22;
