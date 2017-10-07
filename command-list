@@ -1,0 +1,22 @@
+php artisan make:migration createTableSalesReturn \ 
+php artisan make:migration createTablePurchaseOrder \ 
+php artisan make:migration createTableIncomingProduct \
+php artisan make:migration createTablePurchaseReturn \  
+
+php artisan make:controller SalesReturnController
+php artisan make:controller PurchaseOrderController
+php artisan make:controller IncomingProductController
+php artisan make:controller PurchaseReturnController
+
+php artisan make:model SalesReturn
+php artisan make:model PurchaseOrder
+php artisan make:model IncomingProduct
+php artisan make:model PurchaseReturn
+
+====
+
+php artisan migrate:reset
+php artisan migrate
+php artisan db:seed
+echo done
+clear

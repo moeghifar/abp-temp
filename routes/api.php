@@ -53,6 +53,7 @@ Route::get('v1/table/coa/get','TableController@getCoa')->middleware('auth:api');
 Route::post('v1/sales/order/add','SalesOrderController@add')->middleware('auth:api');
 Route::delete('v1/sales/order/{id}','SalesOrderController@delete')->middleware('auth:api');
 Route::get('v1/sales/order/get','SalesOrderController@get')->middleware('auth:api');
+Route::get('v1/sales/order/get/status/{status}','SalesOrderController@getWithStatus')->middleware('auth:api');
 Route::get('v1/sales/order/{id}','SalesOrderController@getById')->middleware('auth:api');
 
 // Sales Invoice API
@@ -60,3 +61,27 @@ Route::post('v1/sales/invoice/add','SalesInvoiceController@add')->middleware('au
 Route::delete('v1/sales/invoice/{id}','SalesInvoiceController@delete')->middleware('auth:api');
 Route::get('v1/sales/invoice/get','SalesInvoiceController@get')->middleware('auth:api');
 Route::get('v1/sales/invoice/{id}','SalesInvoiceController@getById')->middleware('auth:api');
+
+// Sales Return API
+Route::post('v1/sales/return/add','SalesReturnController@add')->middleware('auth:api');
+Route::delete('v1/sales/return/{id}','SalesReturnController@delete')->middleware('auth:api');
+Route::get('v1/sales/return/get','SalesReturnController@get')->middleware('auth:api');
+Route::get('v1/sales/return/{id}','SalesReturnController@getById')->middleware('auth:api');
+
+// Purchase Order API
+Route::post('v1/purchase/order/add','PurchaseOrderController@add')->middleware('auth:api');
+Route::delete('v1/purchase/order/{id}','PurchaseOrderController@delete')->middleware('auth:api');
+Route::get('v1/purchase/order/get','PurchaseOrderController@get')->middleware('auth:api');
+Route::get('v1/purchase/order/{id}','PurchaseOrderController@getById')->middleware('auth:api');
+
+// Incoming Product API
+Route::post('v1/incoming/product/add','IncomingProductController@add')->middleware('auth:api');
+Route::delete('v1/incoming/product/{id}','IncomingProductController@delete')->middleware('auth:api');
+Route::get('v1/incoming/product/get','IncomingProductController@get')->middleware('auth:api');
+Route::get('v1/incoming/product/{id}','IncomingProductController@getById')->middleware('auth:api');
+
+// Purchase Return API
+Route::post('v1/purchase/return/add','PurchaseReturnController@add')->middleware('auth:api');
+Route::delete('v1/purchase/return/{id}','PurchaseReturnController@delete')->middleware('auth:api');
+Route::get('v1/purchase/return/get','PurchaseReturnController@get')->middleware('auth:api');
+Route::get('v1/purchase/return/{id}','PurchaseReturnController@getById')->middleware('auth:api');

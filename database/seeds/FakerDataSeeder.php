@@ -35,5 +35,47 @@ class FakerDataSeeder extends Seeder
                 'created_at'        => Carbon::now(),
             ]);
         }
+        // faker insert product
+        $product = [
+                [
+                    'product_name'  => 'Iphone 7 - 128 GB',
+                    'supplier_id'   => 1,
+                    'price'         => '11000000',
+                    'unit'          => 'pcs',
+                    'updated_at'    => Carbon::now(),
+                    'created_at'    => Carbon::now(),
+                ],[
+                    'product_name'  => 'Iphone 8 - 128 GB',
+                    'supplier_id'   => 5,
+                    'price'         => '14500000',
+                    'unit'          => 'pcs',
+                    'updated_at'    => Carbon::now(),
+                    'created_at'    => Carbon::now(),
+                ],[
+                    'product_name'  => 'Iphone X - 128 GB',
+                    'supplier_id'   => 2,
+                    'price'         => '16450000',
+                    'unit'          => 'pcs',
+                    'updated_at'    => Carbon::now(),
+                    'created_at'    => Carbon::now(),
+                ],[
+                    'product_name'  => 'Macbook Pro 13 inch - 2015' ,
+                    'supplier_id'   => 3,
+                    'price'         => '19850000',
+                    'unit'          => 'pcs',
+                    'updated_at'    => Carbon::now(),
+                    'created_at'    => Carbon::now(),
+                ],[
+                    'product_name'  => 'Macbook Pro 13 inch - 2016' ,
+                    'supplier_id'   => 4,
+                    'price'         => '23250000',
+                    'unit'          => 'pcs',
+                    'updated_at'    => Carbon::now(),
+                    'created_at'    => Carbon::now(),
+                ]
+            ];
+        if(DB::table('products')->get()->count() == 0){
+            DB::table('products')->insert($product);
+        }
     }
 }

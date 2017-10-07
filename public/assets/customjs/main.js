@@ -53,6 +53,12 @@ $(document).ready(function(){
                 id = jData[lp][common.idName + "_id"];
             }
             var actionWrapper = "<span data-id='"+id+"'>"+common.actionButton+"</span>";
+            if (typeof jData[lp]["status"] != "undefined") {
+                if (jData[lp]["status"] > 1) {
+                    var actButton = common.actionButton.split("&nbsp;");
+                    actionWrapper = "<span data-id='" + id + "' style='backgroud:red;'>" + actButton[0] + "</span>";        
+                }
+            }
             jData[lp].price = nyastUtil.numberFormat(jData[lp].price,'Rp '); 
             jData[lp].result_order = lp+1;
             jData[lp].result_action = actionWrapper;

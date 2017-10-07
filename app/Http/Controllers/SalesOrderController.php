@@ -34,6 +34,18 @@ class SalesOrderController extends Controller
         return $so;
     }
 
+    public function getWithStatus(SalesOrder $salesOrder, $status)
+    {
+        $so['data'] = SalesOrder::where('status', $status)->orderBy('id', 'desc')->get();
+        foreach($so['data'] as $i => $v) {
+            $v->sales_order_id = $v->id;
+            $v->sales_order_name = $v->sales_number;
+            $v->price = $v->total_price;
+            $v->customer_name = SalesOrder::find($v->id)->customer->customer_name;
+        }
+        return $so;
+    }
+
     public function getById(SalesOrder $salesOrder, $id)
     {
         $salesOrderData = SalesOrder::find($id);
@@ -74,6 +86,7 @@ class SalesOrderController extends Controller
                 'customer_id'	=> $request->customer_id,
                 'date'	        => $request->date,
                 'total_price'   => 0,
+                'status'        => 1,
             ]);
             // get last insert id
             $insertID = DB::table('sales_order')->max('id');

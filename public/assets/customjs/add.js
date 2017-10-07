@@ -8,7 +8,10 @@ $(document).ready(function(){
     $("body").on("submit", "#formContainer", function(e){
         var serializedInput = $(this).serializeArray();
         var getMultiple = $('#formContainer [name="multiple"]').val();
-        var multiple = getMultiple.split(",");
+        var multiple = null;
+        if (typeof getMultiple != "undefined") {
+            var multiple = getMultiple.split(",");
+        }
         var submitedData = generateRawJson(serializedInput,multiple);
         var action = submitedData._action;
         var id = submitedData.id;
@@ -38,32 +41,6 @@ $(document).ready(function(){
         e.preventDefault();
     });
     /**
-     * modal event listener
-     * this click function will listen #btnAction
-     * there are 3 conditions which are add, edit & delete
-     */
-    $('body').on('click', '#btnAction', function(){
-        var action = $(this).data('action');
-        $('#formContainer input').val("");
-        $("#formContainer #errorContainer").remove();
-        if (action == 'add' || action == 'edit') { 
-            if (action == 'edit') {
-                var getId = $(this).parent().data('id');
-                generateEditForm(getId);
-            } else {
-                selectGenerator(action);
-            }
-            var actionInput = '<input type="hidden" name="_action" value="'+action+'">';
-            $('#appendContainer').html(actionInput);
-            $("#modalForm").modal('toggle');
-        } else if (action == 'delete'){
-            var getId = $(this).parent().data('id');
-            confirmDeleteSA(getId);
-        } else {
-            alert('Wrong action type!');
-        }
-    });
-    /**
      * generateRawJson function
      * used to generate raw json for submission 
      * which dynamically loop unindexed array 
@@ -75,21 +52,25 @@ $(document).ready(function(){
         var arr1 = [];
         var ptr = 1;
         $.map(UnindexedArray, function (n, i) {
-            if (multiple.indexOf(n['name']) < 0) {
-                obj1[n['name']] = cleanCurrency(n['value']);
-            } else {
-                if (ptr < multiple.length) {
-                    obj2[n['name']] = cleanCurrency(n['value']);
-                    ptr++;
+            if (multiple != null) {
+                if (multiple.indexOf(n['name']) < 0) {
+                    obj1[n['name']] = cleanCurrency(n['value']);
                 } else {
-                    obj2[n['name']] = cleanCurrency(n['value']);
-                    arr1.push(obj2);
-                    obj2 = { };
-                    ptr = 1;
+                    if (ptr < multiple.length) {
+                        obj2[n['name']] = cleanCurrency(n['value']);
+                        ptr++;
+                    } else {
+                        obj2[n['name']] = cleanCurrency(n['value']);
+                        arr1.push(obj2);
+                        obj2 = {};
+                        ptr = 1;
+                    }
                 }
-            }
-            if(i == (UnindexedArray.length - 1)) {
-                obj1['multi'] = arr1;
+                if (i == (UnindexedArray.length - 1)) {
+                    obj1['multi'] = arr1;
+                }
+            } else {
+                obj1[n['name']] = n['value'];
             }
         });
         return obj1;
@@ -122,6 +103,7 @@ $(document).ready(function(){
             $('body').find('select').each(function () {
                 var t = $(this);
                 var check = t.data('generate');
+                var status = t.data('status');
                 if (check == 'select-generator') {
                     selectGeneratorAjaxCall(t);   
                 }
@@ -130,7 +112,7 @@ $(document).ready(function(){
         
     }
     function selectGeneratorAjaxCall(t, idSelect) {
-        var ajaxURI = t.data('api')+'get';
+        var ajaxURI = t.data('api');
         var idName = t.data('idname');
         var selectData = '';
         t.html();
@@ -145,15 +127,7 @@ $(document).ready(function(){
             if (typeof idSelect != 'undefined') {
                 selectData = selectGeneratorDataBuilder(getData.data, idName, idSelect);
             } else {
-                var idNameSplit = idName.split('_');
-                var chooseName = "";
-                if (idNameSplit.length > 1) {
-                    for (var l = 0; l < idNameSplit.length; l++ ) {
-                        chooseName += idNameSplit[l] + " ";
-                    }
-                } else {
-                    chooseName = idName;
-                }
+                var chooseName = idName.replace(/_/g," ");
                 defaultSelectData = '<option value="0">choose ' + chooseName + ' data . . .</option>';
                 selectData = defaultSelectData + selectGeneratorDataBuilder(getData.data, idName, null);
             }
@@ -163,7 +137,7 @@ $(document).ready(function(){
     /**
      * Build data for `Select-Generator`
      */
-    function selectGeneratorDataBuilder(jData,idName,idSelected) {
+    function selectGeneratorDataBuilder(jData, idName, idSelected) {
         console.log("[LOG] execute selecGeneratorDataBuilder [idName]"+ idName +" [idSelected]"+ idSelected);
         selectData = [];
         for(lp = 0; lp < jData.length; lp++){
@@ -221,7 +195,7 @@ $(document).ready(function(){
      */
     $('body').on('change','.get-live-data',function(){
         var t = $(this);
-        var ajaxURI = t.data('api') + t.val();
+        var ajaxURI = t.data('api-live') + t.val();
         var idName = t.data('idname');
         var dataGroup = t.parents('.row').attr('id');
         // get data with ajax

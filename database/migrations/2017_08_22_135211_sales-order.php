@@ -19,6 +19,7 @@ class SalesOrder extends Migration
             $table->string('sales_number');
             $table->integer('customer_id')->unsigned();
             $table->integer('total_price');
+            $table->integer('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

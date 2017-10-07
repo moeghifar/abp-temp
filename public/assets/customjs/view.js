@@ -57,7 +57,6 @@ $(document).ready(function(){
         var tblRows = "";
         if (selectorData[selectorName].length > 0) {
             for (var val in selectorData[selectorName]) {
-                // console.log(selectorData[selectorName][val]);
                 if (val == 0) {
                     tblRows += '<thead><tr>';
                     for (var value in common[selectorName]) {
