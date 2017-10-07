@@ -73,11 +73,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="has_sub">
-                    <a class="waves-effect"><i class="fa fa-newspaper-o"></i><span> Worksheet </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="/report/data">Data</a></li>
-                    </ul>
+                <li>
+                    <a href="/inventory/view" class="waves-effect"><i class="fa fa-newspaper-o"></i><span> Worksheet </span></a>
                 </li>
                 <li class="has_sub">
                     <a class="waves-effect"><i class="glyphicon glyphicon-briefcase"></i><span> Report </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
