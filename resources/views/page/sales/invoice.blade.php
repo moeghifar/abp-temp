@@ -122,7 +122,7 @@
                             <div class="col-md-7">
                                 <div class="form-group">
                                     <label for="input2">Sales Order</label>
-                                    <select data-generate="select-generator" data-idname="sales_order" data-api="/api/v1/sales/order/get/status/1" name="sales_order_id" data-status="1" class="form-control"></select>
+                                    <select data-generate="select-generator" data-idname="sales_order" data-api="/api/v1/sales/order/get/status/1" data-api-detail="/api/v1/sales/order/" name="sales_order_id" data-status="1" class="form-control get-sales-order-data"></select>
                                     <small></small>
                                 </div>             
                             </div> 
@@ -137,9 +137,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>                                           
+                        </div>              
+                        <div class="row">
+                            <div class="col-md-12" id="sales-product"></div>
+                        </div>                             
                         <div id="appendContainer"></div>
-                        {{-- <input type="hidden" name="multiple" value="product_id,qty,qty_price"> --}}
                         <input class="btn btn-success" type="submit" name="submit" value="Submit">
                         <input class="btn btn-warning" type="reset" name="reset" value="Reset">
                     </form>
@@ -168,5 +170,36 @@
             });
         </script>
         <script src="/assets/customjs/add.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".get-sales-order-data").on('change',function(){
+                    var t = $(this);
+                    var id = t.val();
+                    var ajaxUrl = t.data('api-detail') + id;
+                    var idName = t.data('idname');
+                    return $.ajax({
+                        headers: {
+                            'Accept': 'application/json',
+                            'Authorization': common.apiToken,
+                        },
+                        url: ajaxUrl,
+                        method: 'GET',
+                    }).success(function (getData) {
+                        //var chooseName = idName.replace(/_/g," ");
+                        //defaultSelectData = '<option value="0">choose ' + chooseName + ' data . . .</option>';
+                        //selectData = defaultSelectData + selectGeneratorDataBuilder(getData.data, idName, null);                
+                        var buildData = '<tr><th>Product</th><th>Price</th><th>Qty</th><th>Total Price</th></tr>';
+                        var pData = getData.data.product_data;
+                        for(val in getData.data.product_data) {
+                            buildData += '<tr><td>'+pData[val]['product_name']+'</td>';  
+                            buildData += '<td>'+nyastUtil.numberFormat(pData[val]['price'], 'Rp ')+'</td>';  
+                            buildData += '<td>'+pData[val]['qty']+'</td>';  
+                            buildData += '<td>'+nyastUtil.numberFormat(pData[val]['qty_price'], 'Rp ')+'</td></tr>';  
+                        }
+                        $("#sales-product").html('<table class="table table-hover">'+buildData+'</table>');
+                    });
+                });
+            });
+        </script>
     @endpush
 @endif

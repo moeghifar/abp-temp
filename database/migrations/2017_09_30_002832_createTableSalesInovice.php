@@ -18,6 +18,8 @@ class CreateTableSalesInovice extends Migration
             $table->date('date');
             $table->string('invoice_number');
             $table->integer('sales_order_id')->unsigned();
+            $table->string('paid_status')->default(0);
+            $table->string('return_status')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
