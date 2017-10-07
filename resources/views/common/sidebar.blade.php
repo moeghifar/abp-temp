@@ -16,19 +16,19 @@
                     </ul>
                 </li>
                 <li class="has_sub">
-                    <a class="waves-effect"><i class="glyphicon glyphicon-tags"></i><span> Sales </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="/sales/order/view">Sales Order</a></li>
-                        <li><a href="/sales/invoice/view">Sales Invoice</a></li>
-                        <li><a href="/sales/return/view">Sales Return</a></li>
-                    </ul>
-                </li>
-                <li class="has_sub">
                     <a class="waves-effect"><i class="glyphicon glyphicon-shopping-cart"></i><span> Purchasing </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="list-unstyled">
                         <li><a href="/purchasing/order">Purchasing Order</a></li>
                         <li><a href="/purchasing/product">Purchasing Product</a></li>
                         <li><a href="/purchasing/return">Purchasing Return</a></li>
+                    </ul>
+                </li>
+                <li class="has_sub">
+                    <a class="waves-effect"><i class="glyphicon glyphicon-tags"></i><span> Sales </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <ul class="list-unstyled">
+                        <li><a href="/sales/order/view">Sales Order</a></li>
+                        <li><a href="/sales/invoice/view">Sales Invoice</a></li>
+                        <li><a href="/sales/return/view">Sales Return</a></li>
                     </ul>
                 </li>
                 <li>
