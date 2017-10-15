@@ -1,8 +1,8 @@
 @extends('index')
 {{-- View data page : List all data --}}
 @if($page == "view" && $id == null)
-    @section('title', 'Sales Invoice')
-    @section('page_title', 'Sales Invoice')
+    @section('title', 'Incoming Product')
+    @section('page_title', 'Incoming Product')
     @section('user_name', 'Administrator')
     @section('content')
         <div class="row">
@@ -10,14 +10,14 @@
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         <div class="m-b-30 m-t-0">
-                            <a href="/sales/invoice/add" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-plus"></i> Add Sales Invoice</a>
+                            <a href="/incoming/product/add" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-plus"></i> Add Incoming Product</a>
                         </div>
                         <table id="datatable-custom-table" class="table table-striped table-bordered dt-responsive no-sort" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th class="number-order">#</th>
-                                <th>Sales Invoice</th>
-                                <th>Customer</th>
+                                <th>Incoming Product Invoice</th>
+                                <th>Supplier</th>
                                 <th>Date</th>
                                 <th class="action">Action</th>
                             </tr>
@@ -54,19 +54,19 @@
         <script>
             var mandatory = ["idName","apiToken","urlID","urlGet","urlAdd","outputColumn","actionButton"]
             var common = {};
-            common.idName       = 'sales_order';
+            common.idName       = 'incoming_product';
             common.apiToken     = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';
-            common.urlID        = '/api/v1/sales/invoice/'; 
-            common.urlGet       = '/api/v1/sales/invoice/get'; 
-            common.urlAdd       = '/api/v1/sales/invoice/add';  
-            common.outputColumn = ["result_order","invoice_number","customer_name","date","result_action"];
+            common.urlID        = '/api/v1/incoming/product/'; 
+            common.urlGet       = '/api/v1/incoming/product/get'; 
+            common.urlAdd       = '/api/v1/incoming/product/add';  
+            common.outputColumn = ["result_order","invoice_number","supplier_name","date","result_action"];
             common.actionButton = '<button id="btnAction" data-action="view" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-eye"></i></button> <button id="btnAction" data-action="delete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>';
         </script>
         <script src="/assets/customjs/main.js"></script>
     @endpush
 @elseif($page == "view" && $id != null)
-    @section('title', 'Detail Sales Order')
-    @section('page_title', 'Detail Sales Order')
+    @section('title', 'Detail Incoming Product')
+    @section('page_title', 'Detail Incoming Product')
     @section('user_name', 'Administrator')
     @section('content')
         <div class="row">
@@ -75,7 +75,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-xs-12" >
-                                <h4 class="alert alert-info">Sales Order</h4>
+                                <h4 class="alert alert-info">Incoming Product</h4>
                                 <table class="table table-bordered" id="sales_order_data">
                                 </table>
                             </div> 
@@ -92,20 +92,20 @@
     @endsection
     @push('custom_js')
         <script>
-            var mandatory = ["idName","apiToken","urlID","sales_order_data"]
+            var mandatory = ["idName","apiToken","urlID","incoming_product_data"]
             var common = {};
             common.idName           = 'sales_order';
             common.apiToken         = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';
-            common.urlID            = '/api/v1/sales/order/' + {{$id}};   
-            common.sales_order_data = { "sales_number": "Sales Number", "date": "Sales Date", "total_price": "Total Price", "customer_data" : "Customer Data"};
+            common.urlID            = '/api/v1/incoming/product/' + {{$id}};   
+            common.incoming_product_data = { "invoice_number": "Invoice Number", "date": "Invoice Date", "total_price": "Total Price", "supplier_data" : "Supplier Data"};
             common.product_data     = { "product_name": "Product Name", "qty": "Quantity", "price": "Price", "qty_price" : "Total Price"};
         </script>
         <script src="/assets/customjs/view.js"></script>
     @endpush
 {{-- Add data page : Add new / create data --}}
 @elseif($page == "add")
-    @section('title', 'Create Sales Invoice')
-    @section('page_title', 'Add Sales Inovice Data')
+    @section('title', 'Create Incoming Product')
+    @section('page_title', 'Add Incoming Product Data')
     @section('user_name', 'Administrator')
     @section('content')
     <div class="row">
@@ -114,15 +114,15 @@
                 <div class="panel-body">
                     <form id="formContainer">
                         <div class="form-group">
-                            <label for="input1">Sales Invoice Number</label>
+                            <label for="input1">Incoming Product Invoice Number</label>
                             <input type="text" class="form-control" name="invoice_number" placeholder="Sales Invoice Number" required>
                             <small></small>
                         </div>
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="form-group">
-                                    <label for="input2">Sales Order</label>
-                                    <select data-generate="select-generator" data-idname="sales_order" data-api="/api/v1/sales/order/get/status/1" name="sales_order_id" data-status="1" class="form-control"></select>
+                                    <label for="input2">Purchase Order</label>
+                                    <select data-generate="select-generator" data-idname="purchase_order" data-api="/api/v1/purchase/order/get?status=1" name="purchase_order_id" data-status="1" class="form-control"></select>
                                     <small></small>
                                 </div>             
                             </div> 
@@ -131,7 +131,7 @@
                                     <label>Date</label>
                                     <div>
                                         <div class="input-group">
-                                            <input type="text" name="date" class="form-control" placeholder="Sales Invoice Date" id="datepicker-autoclose" required>
+                                            <input type="text" name="date" class="form-control" placeholder="Incoming Product Invoice Date" id="datepicker-autoclose" required>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar"></i></span>
                                         </div><!-- input-group -->
                                     </div>
@@ -156,7 +156,7 @@
         <script>
             var mandatory = ["idName","apiToken","urlAdd"]
             var common = {};
-            common.idName       = 'sales_invoice';
+            common.idName       = 'incoming_product';
             common.apiToken     = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';
             common.urlAdd       = '/api/v1/sales/invoice/add';  
             jQuery('#datepicker-autoclose').datepicker({

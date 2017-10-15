@@ -22,6 +22,6 @@ class PurchaseOrder extends Model
 
     public function product()
     {
-        return $this->belongsToMany('App\Product','product_order_product')->withPivot('qty', 'qty_price');
+        return $this->belongsToMany('App\Product','purchase_order_product')->withPivot('qty', 'qty_price');
     }
 }

@@ -98,7 +98,7 @@
             common.idName           = 'sales_order';
             common.apiToken         = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';
             common.urlID            = '/api/v1/purchase/order/' + {{$id}};   
-            common.sales_order_data = { "purchase_number": "Purchase Number", "date": "Purchase Date", "total_price": "Total Price", "supplier_data" : "Supplier Data"};
+            common.purchase_order_data = { "purchase_number": "Purchase Number", "date": "Purchase Date", "total_price": "Total Price", "supplier_data" : "Supplier Data"};
             common.product_data     = { "product_name": "Product Name", "qty": "Quantity", "price": "Price", "qty_price" : "Total Price"};
         </script>
         <script src="/assets/customjs/view.js"></script>
@@ -140,14 +140,14 @@
                             </div>
                         </div>
                         <div class="duplicator">
-                            <div class="row" id="sales-product">
+                            <div class="row" id="purchase-product">
                                 <div class="col-md-1">
                                     <div class="form-group">
                                         <a class="btn btn-md btn-success duplicate" data-duplicate="purchase-product-duplicate" style="margin-top:25px;"><i class="fa fa-plus"></i></a>
                                         <small></small>
                                     </div>
                                 </div>
-                                <span id="sales-product-duplicate">
+                                <span id="purchase-product-duplicate">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="input2">Product Name</label>

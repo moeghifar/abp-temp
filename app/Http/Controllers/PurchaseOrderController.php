@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\PurchaseOrder;
 use Validator;
@@ -21,7 +22,7 @@ class PurchaseOrderController extends Controller
             $v->purchase_order_id = $v->id;
             $v->purchase_order_name = $v->purchase_number;
             $v->price = $v->total_price;
-            $v->supplier_name = SalesOrder::find($v->id)->supplier->supplier_name;
+            $v->supplier_name = PurchaseOrder::find($v->id)->supplier->supplier_name;
         }
         return $po;
     }
@@ -63,7 +64,7 @@ class PurchaseOrderController extends Controller
             // insert into sales order
             $rsp = $purchaseOrder->create([
                 'purchase_number'	=> $request->purchase_number,
-                'supplier_id'	    => $request->customer_id,
+                'supplier_id'	    => $request->supplier_id,
                 'date'	            => $request->date,
                 'total_price'       => 0,
                 'status'            => 1,
