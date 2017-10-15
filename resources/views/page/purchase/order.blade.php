@@ -1,8 +1,8 @@
 @extends('index')
 {{-- View data page : List all data --}}
 @if($page == "view" && $id == null)
-    @section('title', 'Sales Order')
-    @section('page_title', 'Sales Order')
+    @section('title', 'Purchase Order')
+    @section('page_title', 'Purchase Order')
     @section('user_name', 'Administrator')
     @section('content')
         <div class="row">
@@ -10,14 +10,14 @@
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         <div class="m-b-30 m-t-0">
-                            <a href="/sales/order/add" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-plus"></i> Add Sales Order</a>
+                            <a href="/purchase/order/add" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-plus"></i> Add Purchase Order</a>
                         </div>
                         <table id="datatable-custom-table" class="table table-striped table-bordered dt-responsive no-sort" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th class="number-order">#</th>
-                                <th>Sales Number</th>
-                                <th>Customer Name</th>
+                                <th>Purchase Number</th>
+                                <th>Supplier Name</th>
                                 <th>Date</th>
                                 <th>Total Price</th>
                                 <th class="action">Action</th>
@@ -55,19 +55,19 @@
         <script>
             var mandatory = ["idName","apiToken","urlID","urlGet","urlAdd","outputColumn","actionButton"]
             var common = {};
-            common.idName       = 'sales_order';
+            common.idName       = 'purchase_order';
             common.apiToken     = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';
-            common.urlID        = '/api/v1/sales/order/'; 
-            common.urlGet       = '/api/v1/sales/order/get'; 
-            common.urlAdd       = '/api/v1/sales/order/add';  
-            common.outputColumn = ["result_order","sales_number","customer_name","date","price","result_action"];
+            common.urlID        = '/api/v1/purchase/order/'; 
+            common.urlGet       = '/api/v1/purchase/order/get'; 
+            common.urlAdd       = '/api/v1/purchase/order/add';  
+            common.outputColumn = ["result_order","purchase_number","supplier_name","date","price","result_action"];
             common.actionButton = '<button id="btnAction" data-action="view" style="margin-bottom:5px;" class="btn btn-xs btn-warning"><i class="fa fa-eye"></i></button>&nbsp;<button id="btnAction" data-action="delete" style="margin-bottom:5px;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>';
         </script>
         <script src="/assets/customjs/main.js"></script>
     @endpush
 @elseif($page == "view" && $id != null)
-    @section('title', 'Detail Sales Order')
-    @section('page_title', 'Detail Sales Order')
+    @section('title', 'Detail Purchase Order')
+    @section('page_title', 'Detail Purchase Order')
     @section('user_name', 'Administrator')
     @section('content')
         <div class="row">
@@ -76,8 +76,8 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-xs-12" >
-                                <h4 class="alert alert-info">Sales Order</h4>
-                                <table class="table table-bordered" id="sales_order_data">
+                                <h4 class="alert alert-info">Purchase Order</h4>
+                                <table class="table table-bordered" id="purchase_order_data">
                                 </table>
                             </div> 
                             <div class="col-xs-12">
@@ -93,20 +93,20 @@
     @endsection
     @push('custom_js')
         <script>
-            var mandatory = ["idName","apiToken","urlID","sales_order_data"]
+            var mandatory = ["idName","apiToken","urlID","purchase_order_data"]
             var common = {};
             common.idName           = 'sales_order';
             common.apiToken         = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';
-            common.urlID            = '/api/v1/sales/order/' + {{$id}};   
-            common.sales_order_data = { "sales_number": "Sales Number", "date": "Sales Date", "total_price": "Total Price", "customer_data" : "Customer Data"};
+            common.urlID            = '/api/v1/purchase/order/' + {{$id}};   
+            common.sales_order_data = { "purchase_number": "Purchase Number", "date": "Purchase Date", "total_price": "Total Price", "supplier_data" : "Supplier Data"};
             common.product_data     = { "product_name": "Product Name", "qty": "Quantity", "price": "Price", "qty_price" : "Total Price"};
         </script>
         <script src="/assets/customjs/view.js"></script>
     @endpush
 {{-- Add data page : Add new / create data --}}
 @elseif($page == "add")
-    @section('title', 'Create Sales Order')
-    @section('page_title', 'Add Sales Order Data')
+    @section('title', 'Create Purchase Order')
+    @section('page_title', 'Add Purchase Order Data')
     @section('user_name', 'Administrator')
     @section('content')
     <div class="row">
@@ -115,15 +115,15 @@
                 <div class="panel-body">
                     <form id="formContainer">
                         <div class="form-group">
-                            <label for="input1">Sales Order Number</label>
-                            <input type="text" class="form-control" name="sales_number" placeholder="Sales Order Number" required>
+                            <label for="input1">Purchase Order Number</label>
+                            <input type="text" class="form-control" name="purchase_number" placeholder="Purchase Order Number" required>
                             <small></small>
                         </div>
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="form-group">
-                                    <label for="input2">Customer</label>
-                                    <select data-generate="select-generator" data-idname="customer" data-api="/api/v1/customer/get" name="customer_id" class="form-control"></select>
+                                    <label for="input2">Supplier</label>
+                                    <select data-generate="select-generator" data-idname="supplier" data-api="/api/v1/supplier/get" name="supplier_id" class="form-control"></select>
                                     <small></small>
                                 </div>             
                             </div> 
@@ -132,7 +132,7 @@
                                     <label>Date</label>
                                     <div>
                                         <div class="input-group">
-                                            <input type="text" name="date" class="form-control" placeholder="Sales Order Date" id="datepicker-autoclose" required>
+                                            <input type="text" name="date" class="form-control" placeholder="Purchase Order Date" id="datepicker-autoclose" required>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar"></i></span>
                                         </div><!-- input-group -->
                                     </div>
@@ -143,7 +143,7 @@
                             <div class="row" id="sales-product">
                                 <div class="col-md-1">
                                     <div class="form-group">
-                                        <a class="btn btn-md btn-success duplicate" data-duplicate="sales-product-duplicate" style="margin-top:25px;"><i class="fa fa-plus"></i></a>
+                                        <a class="btn btn-md btn-success duplicate" data-duplicate="purchase-product-duplicate" style="margin-top:25px;"><i class="fa fa-plus"></i></a>
                                         <small></small>
                                     </div>
                                 </div>
@@ -197,9 +197,9 @@
         <script>
             var mandatory = ["idName","apiToken","urlAdd"]
             var common = {};
-            common.idName       = 'sales_order';
+            common.idName       = 'purchase_order';
             common.apiToken     = 'Bearer 7f9d683f2ec94ab9614ff204ac2be5591d7c84a3710895c0c477d3bb9f3ef2d93b3562ec94b2f0859c2e9122a70845da1d26193f2bb10f7743ddd0338394ea69';
-            common.urlAdd       = '/api/v1/sales/order/add';  
+            common.urlAdd       = '/api/v1/purchase/order/add';  
             jQuery('#datepicker-autoclose').datepicker({
                 startView: 'decade',
                 format: 'yyyy-mm-dd',

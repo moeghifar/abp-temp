@@ -47,7 +47,7 @@ class SalesOrder extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sales_order_product');
-        Schema::dropIfExists('sales_order');
+        Schema::drop('sales_order_product');
+        Schema::drop('sales_order');
     }
 }

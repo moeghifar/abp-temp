@@ -32,6 +32,6 @@ class CreateTableCoa extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cart_of_accounts');
+        Schema::drop('cart_of_accounts');
     }
 }

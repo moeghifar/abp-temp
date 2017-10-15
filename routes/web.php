@@ -88,9 +88,26 @@ Route::get('/sales/return/{page?}/{id?}', function ($page = null, $id = null) {
     return view($view, $params);
 });
 
+Route::get('/purchase/order/{page?}/{id?}', function ($page = null, $id = null) {
+    $view = 'page/purchase/order';
+    if($page == null) {
+        return abort(404,"Wrong URI Path"); 
+    }
+    if($id != null) {
+        if(!is_numeric($id)){
+            return abort(404,"Wrong URI Path"); 
+        }
+    }
+    $params['page'] = $page;
+    $params['id'] = $id;
+    return view($view, $params);
+});
+
 Route::get('/table/coa/', function () {
     $params[] = '';
     return view('page/table/coa',$params);
 });
 
 Route::get('sales/invoice.debug','SalesInvoiceController@debug');
+
+Route::get('purchase/debug','PurchaseOrderController@debug');

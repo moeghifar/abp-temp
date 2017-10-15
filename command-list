@@ -15,8 +15,4 @@ php artisan make:model PurchaseReturn
 
 ====
 
-php artisan migrate:reset
-php artisan migrate
-php artisan db:seed
-echo done
-clear
+php artisan migrate:reset && php artisan migrate && php artisan db:seed && echo done

@@ -22,6 +22,6 @@ class SalesOrder extends Model
     
     public function product()
     {
-        return $this->belongsToMany('App\Product','sales_order_product')->withPivot('qty', 'qty_price');;
+        return $this->belongsToMany('App\Product','sales_order_product')->withPivot('qty', 'qty_price');
     }
 }

@@ -13,7 +13,18 @@ class CreateTablePurchaseReturn extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('purchase_return',function(Blueprint $table) {
+            $table->increments('id');
+            $table->integer('incoming_product_id')->unsigned();
+            $table->integer('purchase_order_product_id')->unsigned();
+            $table->integer('qty_returned');
+            $table->integer('qty_price_returned');
+            $table->timestamps();
+        });
+        Schema::table('purchase_return',function(Blueprint $table) {
+            $table->foreign('incoming_product_id')->references('id')->on('incoming_product');
+            $table->foreign('purchase_order_product_id')->references('id')->on('purchase_order_product');
+        });
     }
 
     /**
@@ -23,6 +34,6 @@ class CreateTablePurchaseReturn extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('purchase_return');
     }
 }

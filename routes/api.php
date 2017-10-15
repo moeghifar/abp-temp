@@ -74,6 +74,8 @@ Route::delete('v1/purchase/order/{id}','PurchaseOrderController@delete')->middle
 Route::get('v1/purchase/order/get','PurchaseOrderController@get')->middleware('auth:api');
 Route::get('v1/purchase/order/{id}','PurchaseOrderController@getById')->middleware('auth:api');
 
+Route::get('v1/purchase/debug','PurchaseOrderController@debug');
+
 // Incoming Product API
 Route::post('v1/incoming/product/add','IncomingProductController@add')->middleware('auth:api');
 Route::delete('v1/incoming/product/{id}','IncomingProductController@delete')->middleware('auth:api');

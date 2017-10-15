@@ -18,9 +18,9 @@
                 <li class="has_sub">
                     <a class="waves-effect"><i class="glyphicon glyphicon-shopping-cart"></i><span> Purchasing </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="/purchasing/order">Purchasing Order</a></li>
-                        <li><a href="/purchasing/product">Purchasing Product</a></li>
-                        <li><a href="/purchasing/return">Purchasing Return</a></li>
+                        <li><a href="/purchase/order/view">Purchase Order</a></li>
+                        <li><a href="/purchase/product/view">Incoming Product</a></li>
+                        <li><a href="/purchase/return/view">Purchase Return</a></li>
                     </ul>
                 </li>
                 <li class="has_sub">

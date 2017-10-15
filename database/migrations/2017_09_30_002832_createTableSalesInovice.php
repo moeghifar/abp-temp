@@ -35,8 +35,6 @@ class CreateTableSalesInovice extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('sales_order_product');
-        // Schema::dropIfExists('sales_order');
-        Schema::dropIfExists('sales_invoice');
+        Schema::drop('sales_invoice');
     }
 }

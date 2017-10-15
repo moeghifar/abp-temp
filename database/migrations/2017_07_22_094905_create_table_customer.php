@@ -31,6 +31,6 @@ class CreateTableCustomer extends Migration
     public function down()
     {
         //
-        Schema::dropIfExists('customers');
+        Schema::drop('customers');
     }
 }
