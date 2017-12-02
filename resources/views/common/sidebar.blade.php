@@ -45,31 +45,31 @@
                     <a class="waves-effect"><i class="fa fa-bank"></i><span> Accounting </span><span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="/inventory/view" class="waves-effect"> Set Assets </a>
+                            <a href="/accounting/asset/view" class="waves-effect"> Set Assets </a>
                         </li>
                         <li>
-                            <a href="/inventory/view" class="waves-effect"> Set Balance </a>
+                            <a href="/accounting/balance/view" class="waves-effect"> Set Balance </a>
                         </li>
                         <li>
-                            <a href="/inventory/view" class="waves-effect"> Customers Accounts </a>
+                            <a href="/accounting/customers_accounts/view" class="waves-effect"> Customers Accounts </a>
                         </li>
                         <li>
-                            <a href="/inventory/view" class="waves-effect"> Suppliers Accounts </a>
+                            <a href="/accounting/suppliers_accounts/view" class="waves-effect"> Suppliers Accounts </a>
                         </li>
                         <li>
-                            <a href="/inventory/view" class="waves-effect"> Journal </a>
+                            <a href="/accounting/journal/view" class="waves-effect"> Journal </a>
                         </li>
                         <li>
-                            <a href="/inventory/view" class="waves-effect"> General Ledger </a>
+                            <a href="/accounting/general_ledger/view" class="waves-effect"> General Ledger </a>
                         </li>
                         <li>
-                            <a href="/inventory/view" class="waves-effect"> Unajusted Trial Balance </a>
+                            <a href="/accounting/utb/view" class="waves-effect"> Unajusted Trial Balance </a>
                         </li>
                         <li>
-                            <a href="/inventory/view" class="waves-effect"> Adjusment Entries </a>
+                            <a href="/accounting/ae/view" class="waves-effect"> Adjusment Entries </a>
                         </li>
                         <li>
-                            <a href="/inventory/view" class="waves-effect"> Ajusted Trial Balance </a>
+                            <a href="/accounting/atb/view" class="waves-effect"> Ajusted Trial Balance </a>
                         </li>
                     </ul>
                 </li>

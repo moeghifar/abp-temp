@@ -118,10 +118,87 @@ Route::get('/purchase/incoming/{page?}/{id?}', function ($page = null, $id = nul
     return view($view, $params);
 });
 
+Route::get('/accounting/asset/{page?}/{id?}', function ($page = null, $id = null) {
+    $view = 'page/accounting/asset';
+    if($page == null) {
+        return abort(404,"Wrong URI Path"); 
+    }
+    if($id != null) {
+        if(!is_numeric($id)){
+            return abort(404,"Wrong URI Path"); 
+        }
+    }
+    $params['page'] = $page;
+    $params['id'] = $id;
+    return view($view, $params);
+});
+
+Route::get('/accounting/balance/{page?}/{id?}', function ($page = null, $id = null) {
+    $view = 'page/accounting/balance';
+    if($page == null) {
+        return abort(404,"Wrong URI Path"); 
+    }
+    if($id != null) {
+        if(!is_numeric($id)){
+            return abort(404,"Wrong URI Path"); 
+        }
+    }
+    $params['page'] = $page;
+    $params['id'] = $id;
+    return view($view, $params);
+});
+
+Route::get('/accounting/customers_accounts/{page?}/{id?}', function ($page = null, $id = null) {
+    $view = 'page/accounting/customers_accounts';
+    if($page == null) {
+        return abort(404,"Wrong URI Path"); 
+    }
+    if($id != null) {
+        if(!is_numeric($id)){
+            return abort(404,"Wrong URI Path"); 
+        }
+    }
+    $params['page'] = $page;
+    $params['id'] = $id;
+    return view($view, $params);
+});
+
+Route::get('/accounting/suppliers_accounts/{page?}/{id?}', function ($page = null, $id = null) {
+    $view = 'page/accounting/suppliers_accounts';
+    if($page == null) {
+        return abort(404,"Wrong URI Path"); 
+    }
+    if($id != null) {
+        if(!is_numeric($id)){
+            return abort(404,"Wrong URI Path"); 
+        }
+    }
+    $params['page'] = $page;
+    $params['id'] = $id;
+    return view($view, $params);
+});
+
+Route::get('/accounting/journal/{page?}/{id?}', function ($page = null, $id = null) {
+    $view = 'page/accounting/journal';
+    if($page == null) {
+        return abort(404,"Wrong URI Path"); 
+    }
+    if($id != null) {
+        if(!is_numeric($id)){
+            return abort(404,"Wrong URI Path"); 
+        }
+    }
+    $params['page'] = $page;
+    $params['id'] = $id;
+    return view($view, $params);
+});
+
 Route::get('/table/coa/', function () {
     $params[] = '';
     return view('page/table/coa',$params);
 });
+
+
 
 Route::get('sales/invoice.debug','SalesInvoiceController@debug');
 

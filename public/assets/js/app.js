@@ -154,3 +154,10 @@ function ($) {
 function notifSA(header,message) {
     swal(header, message);
 }
+function notifSAError(header, message) {
+    swal(
+        header,
+        message,
+        'error'
+    )
+}

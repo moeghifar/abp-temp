@@ -34,6 +34,8 @@ $(document).ready(function(){
             },
             url: common.urlGet,
             method: 'GET',
+        }).error(function (data) {
+            notifSAError("Upss error!", data.status + " : " + data.statusText);
         }).done(function(getData){
             console.log(getData.data);
             var jsonData = buildData(getData.data);

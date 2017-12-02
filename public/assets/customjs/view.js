@@ -34,6 +34,8 @@ $(document).ready(function(){
             },
             url: common.urlID,
             method: 'GET',
+        }).error(function (data) {
+            console.log(data);
         }).done(function(getData){
             console.log(getData);
             if(getData.total == 0) {
